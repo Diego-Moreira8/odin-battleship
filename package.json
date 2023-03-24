@@ -1,0 +1,22 @@
+{
+  "name": "odin-battleship",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Diego-Moreira8/odin-battleship.git"
+  },
+  "author": "Diego Moreira diego.moreira529@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Diego-Moreira8/odin-battleship/issues"
+  },
+  "homepage": "https://github.com/Diego-Moreira8/odin-battleship#readme",
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
