@@ -16,7 +16,7 @@ export class Ship {
 
 export class GameBoard {
   constructor() {
-    // Creates a 10x10 board
+    // Creates a 10x10 board ([y][x])
     this.board = [...Array(10)].map(() => Array(10));
   }
 
@@ -56,18 +56,35 @@ export class GameBoard {
 
     if (direction === "horizontal") {
       for (let i = x; i < x + length; i++) {
-        this.board[i][y] = ship;
+        this.board[y][i] = ship;
       }
     }
 
     if (direction === "vertical") {
       for (let i = y; i < y + length; i++) {
-        this.board[x][i] = ship;
+        this.board[i][x] = ship;
       }
     }
   }
 
   isOccupied(x, y) {
-    return this.board[x][y] !== undefined ? true : false;
+    return this.board[y][x] !== undefined ? true : false;
+  }
+
+  printBoard() {
+    let board = "";
+
+    for (let xAxis of this.board) {
+      for (let position of xAxis) {
+        if (position !== undefined) {
+          board += "● ";
+        } else {
+          board += "○ ";
+        }
+      }
+      board += "\n";
+    }
+
+    return board;
   }
 }

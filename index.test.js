@@ -32,15 +32,17 @@ describe("Gameboard - ship placement", () => {
   });
 
   test("Horizontal placement", () => {
-    expect(testBoard.placeShip(2, 1, 1, "horizontal")).not.toBeNull();
-    expect(testBoard.isOccupied(0, 1)).toBeFalsy();
-    expect(testBoard.isOccupied(1, 1)).toBeTruthy();
-    expect(testBoard.isOccupied(2, 1)).toBeTruthy();
-    expect(testBoard.isOccupied(3, 1)).toBeFalsy();
+    expect(testBoard.placeShip(2, 4, 5, "horizontal")).not.toBeNull();
+    console.log(testBoard.printBoard());
+    expect(testBoard.isOccupied(3, 5)).toBeFalsy();
+    expect(testBoard.isOccupied(4, 5)).toBeTruthy();
+    expect(testBoard.isOccupied(5, 5)).toBeTruthy();
+    expect(testBoard.isOccupied(6, 5)).toBeFalsy();
   });
 
   test("Vertical placement", () => {
     expect(testBoard.placeShip(3, 5, 2, "vertical")).not.toBeNull();
+    console.log(testBoard.printBoard());
     expect(testBoard.isOccupied(5, 1)).toBeFalsy();
     expect(testBoard.isOccupied(5, 2)).toBeTruthy();
     expect(testBoard.isOccupied(5, 3)).toBeTruthy();
