@@ -72,14 +72,16 @@ export class GameBoard {
   }
 
   printBoard() {
-    let board = "";
+    let board = "  0 1 2 3 4 5 6 7 8 9\n";
+    let line = 0;
 
     for (let xAxis of this.board) {
+      board += `${line++} `;
       for (let position of xAxis) {
         if (position !== undefined) {
-          board += "● ";
+          board += "■ ";
         } else {
-          board += "○ ";
+          board += "· ";
         }
       }
       board += "\n";
