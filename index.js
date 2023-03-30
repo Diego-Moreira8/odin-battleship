@@ -47,6 +47,10 @@ export class GameBoard {
       console.log("Invalid coordinates");
       return null;
     }
+    if (x + length > 10 || y + length > 10) {
+      console.log("The ship cannot be placed over the border");
+      return null;
+    }
     if (direction !== "horizontal" && direction !== "vertical") {
       console.log("Invalid direction. Must be: 'horizontal' or 'vertical'");
       return null;

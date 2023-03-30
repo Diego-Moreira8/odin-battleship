@@ -49,4 +49,17 @@ describe("Gameboard - ship placement", () => {
     expect(testBoard.isOccupied(5, 4)).toBeTruthy();
     expect(testBoard.isOccupied(5, 5)).toBeFalsy();
   });
+
+  test("Going over the edge", () => {
+    expect(testBoard.placeShip(1, 9, 1, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(2, 9, 1, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(3, 9, 1, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(4, 9, 1, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(1, 1, 9, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(2, 1, 9, "vertical")).toBeNull();
+    expect(testBoard.placeShip(3, 1, 9, "vertical")).toBeNull();
+    expect(testBoard.placeShip(4, 1, 9, "vertical")).toBeNull();
+    expect(testBoard.placeShip(1, 9, 9, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(2, 9, 9, "horizontal")).toBeNull();
+  });
 });
