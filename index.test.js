@@ -61,5 +61,6 @@ describe("Gameboard - ship placement", () => {
     expect(testBoard.placeShip(4, 1, 9, "vertical")).toBeNull();
     expect(testBoard.placeShip(1, 9, 9, "horizontal")).not.toBeNull();
     expect(testBoard.placeShip(2, 9, 9, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(3, 7, 9, "horizontal")).not.toBeNull();
   });
 });

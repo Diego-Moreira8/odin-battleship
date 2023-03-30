@@ -47,7 +47,7 @@ export class GameBoard {
       console.log("Invalid coordinates");
       return null;
     }
-    if (x + length > 10 || y + length > 10) {
+    if (x + length > 9 || y + length > 9) {
       console.log("The ship cannot be placed over the border");
       return null;
     }
@@ -91,6 +91,7 @@ export class GameBoard {
       board += "\n";
     }
 
+    console.log(board);
     return board;
   }
 }
