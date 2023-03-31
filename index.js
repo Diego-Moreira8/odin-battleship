@@ -16,7 +16,7 @@ export class Ship {
 
 export class GameBoard {
   constructor() {
-    // Creates a 10x10 board ([y][x])
+    // Creates a 10x10 board ([x][y])
     this.board = [...Array(10)].map(() => Array(10));
   }
 
@@ -47,7 +47,7 @@ export class GameBoard {
       console.log("Invalid coordinates");
       return null;
     }
-    if (x + length > 9 || y + length > 9) {
+    if (x + length - 1 > 9 || y + length - 1 > 9) {
       console.log("The ship cannot be placed over the border");
       return null;
     }
@@ -60,29 +60,31 @@ export class GameBoard {
 
     if (direction === "horizontal") {
       for (let i = x; i < x + length; i++) {
-        this.board[y][i] = ship;
+        this.board[i][y] = ship;
       }
     }
 
     if (direction === "vertical") {
       for (let i = y; i < y + length; i++) {
-        this.board[i][x] = ship;
+        this.board[x][i] = ship;
       }
     }
+
+    this.printBoard();
   }
 
   isOccupied(x, y) {
-    return this.board[y][x] !== undefined ? true : false;
+    return this.board[x][y] !== undefined ? true : false;
   }
 
   printBoard() {
     let board = "  0 1 2 3 4 5 6 7 8 9\n";
     let line = 0;
 
-    for (let xAxis of this.board) {
+    for (let y = 0; y <= 9; y++) {
       board += `${line++} `;
-      for (let position of xAxis) {
-        if (position !== undefined) {
+      for (let x = 0; x <= 9; x++) {
+        if (this.board[x][y] !== undefined) {
           board += "■ ";
         } else {
           board += "· ";

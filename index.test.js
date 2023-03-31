@@ -51,16 +51,44 @@ describe("Gameboard - ship placement", () => {
   });
 
   test("Going over the edge", () => {
-    expect(testBoard.placeShip(1, 9, 1, "horizontal")).not.toBeNull();
-    expect(testBoard.placeShip(2, 9, 1, "horizontal")).toBeNull();
-    expect(testBoard.placeShip(3, 9, 1, "horizontal")).toBeNull();
-    expect(testBoard.placeShip(4, 9, 1, "horizontal")).toBeNull();
-    expect(testBoard.placeShip(1, 1, 9, "vertical")).not.toBeNull();
-    expect(testBoard.placeShip(2, 1, 9, "vertical")).toBeNull();
-    expect(testBoard.placeShip(3, 1, 9, "vertical")).toBeNull();
-    expect(testBoard.placeShip(4, 1, 9, "vertical")).toBeNull();
-    expect(testBoard.placeShip(1, 9, 9, "horizontal")).not.toBeNull();
-    expect(testBoard.placeShip(2, 9, 9, "horizontal")).toBeNull();
-    expect(testBoard.placeShip(3, 7, 9, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(1, 9, 0, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(2, 9, 0, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(3, 9, 0, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(4, 9, 0, "horizontal")).toBeNull();
+
+    expect(testBoard.placeShip(1, 8, 0, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(2, 8, 0, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(3, 8, 0, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(4, 8, 0, "horizontal")).toBeNull();
+
+    expect(testBoard.placeShip(1, 7, 0, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(2, 7, 0, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(3, 7, 0, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(4, 7, 0, "horizontal")).toBeNull();
+
+    expect(testBoard.placeShip(1, 6, 0, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(2, 6, 0, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(3, 6, 0, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(4, 6, 0, "horizontal")).not.toBeNull();
+
+    expect(testBoard.placeShip(1, 9, 0, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(2, 9, 0, "vertical")).toBeNull();
+    expect(testBoard.placeShip(3, 9, 0, "vertical")).toBeNull();
+    expect(testBoard.placeShip(4, 9, 0, "vertical")).toBeNull();
+
+    expect(testBoard.placeShip(1, 8, 0, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(2, 8, 0, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(3, 8, 0, "vertical")).toBeNull();
+    expect(testBoard.placeShip(4, 8, 0, "vertical")).toBeNull();
+
+    expect(testBoard.placeShip(1, 7, 0, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(2, 7, 0, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(3, 7, 0, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(4, 7, 0, "vertical")).toBeNull();
+
+    expect(testBoard.placeShip(1, 6, 0, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(2, 6, 0, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(3, 6, 0, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(4, 6, 0, "vertical")).not.toBeNull();
   });
 });
