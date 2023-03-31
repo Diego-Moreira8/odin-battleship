@@ -11,7 +11,7 @@ test("Ship creation", () => {
   expect(testShip.isSunk()).toBeTruthy();
 });
 
-describe("Gameboard - ship placement", () => {
+describe("Game board - ship placement", () => {
   let testBoard;
 
   beforeEach(() => {
@@ -51,44 +51,53 @@ describe("Gameboard - ship placement", () => {
   });
 
   test("Going over the edge", () => {
-    expect(testBoard.placeShip(1, 9, 0, "horizontal")).not.toBeNull();
     expect(testBoard.placeShip(2, 9, 0, "horizontal")).toBeNull();
     expect(testBoard.placeShip(3, 9, 0, "horizontal")).toBeNull();
     expect(testBoard.placeShip(4, 9, 0, "horizontal")).toBeNull();
 
-    expect(testBoard.placeShip(1, 8, 0, "horizontal")).not.toBeNull();
-    expect(testBoard.placeShip(2, 8, 0, "horizontal")).not.toBeNull();
     expect(testBoard.placeShip(3, 8, 0, "horizontal")).toBeNull();
     expect(testBoard.placeShip(4, 8, 0, "horizontal")).toBeNull();
 
-    expect(testBoard.placeShip(1, 7, 0, "horizontal")).not.toBeNull();
-    expect(testBoard.placeShip(2, 7, 0, "horizontal")).not.toBeNull();
-    expect(testBoard.placeShip(3, 7, 0, "horizontal")).not.toBeNull();
     expect(testBoard.placeShip(4, 7, 0, "horizontal")).toBeNull();
 
-    expect(testBoard.placeShip(1, 6, 0, "horizontal")).not.toBeNull();
-    expect(testBoard.placeShip(2, 6, 0, "horizontal")).not.toBeNull();
-    expect(testBoard.placeShip(3, 6, 0, "horizontal")).not.toBeNull();
-    expect(testBoard.placeShip(4, 6, 0, "horizontal")).not.toBeNull();
-
-    expect(testBoard.placeShip(1, 9, 0, "vertical")).not.toBeNull();
     expect(testBoard.placeShip(2, 9, 0, "vertical")).toBeNull();
     expect(testBoard.placeShip(3, 9, 0, "vertical")).toBeNull();
     expect(testBoard.placeShip(4, 9, 0, "vertical")).toBeNull();
 
-    expect(testBoard.placeShip(1, 8, 0, "vertical")).not.toBeNull();
-    expect(testBoard.placeShip(2, 8, 0, "vertical")).not.toBeNull();
     expect(testBoard.placeShip(3, 8, 0, "vertical")).toBeNull();
     expect(testBoard.placeShip(4, 8, 0, "vertical")).toBeNull();
 
-    expect(testBoard.placeShip(1, 7, 0, "vertical")).not.toBeNull();
-    expect(testBoard.placeShip(2, 7, 0, "vertical")).not.toBeNull();
-    expect(testBoard.placeShip(3, 7, 0, "vertical")).not.toBeNull();
     expect(testBoard.placeShip(4, 7, 0, "vertical")).toBeNull();
+  });
 
-    expect(testBoard.placeShip(1, 6, 0, "vertical")).not.toBeNull();
-    expect(testBoard.placeShip(2, 6, 0, "vertical")).not.toBeNull();
-    expect(testBoard.placeShip(3, 6, 0, "vertical")).not.toBeNull();
-    expect(testBoard.placeShip(4, 6, 0, "vertical")).not.toBeNull();
+  test("Placing in occupied coordinates", () => {
+    testBoard.placeShip(1, 0, 0, "horizontal");
+    expect(testBoard.placeShip(1, 0, 0, "horizontal")).toBeNull();
+
+    testBoard.placeShip(4, 5, 1, "horizontal");
+
+    expect(testBoard.placeShip(4, 2, 1, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(4, 3, 1, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(4, 4, 1, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(4, 5, 1, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(4, 6, 1, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(3, 7, 1, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(2, 8, 1, "horizontal")).toBeNull();
+
+    expect(testBoard.placeShip(4, 1, 1, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(1, 9, 1, "horizontal")).not.toBeNull();
+
+    testBoard.placeShip(4, 0, 5, "vertical");
+
+    expect(testBoard.placeShip(4, 0, 2, "vertical")).toBeNull();
+    expect(testBoard.placeShip(4, 0, 3, "vertical")).toBeNull();
+    expect(testBoard.placeShip(4, 0, 4, "vertical")).toBeNull();
+    expect(testBoard.placeShip(4, 0, 5, "vertical")).toBeNull();
+    expect(testBoard.placeShip(4, 0, 6, "vertical")).toBeNull();
+    expect(testBoard.placeShip(3, 0, 7, "vertical")).toBeNull();
+    expect(testBoard.placeShip(2, 0, 8, "vertical")).toBeNull();
+
+    expect(testBoard.placeShip(4, 0, 1, "vertical")).not.toBeNull();
+    expect(testBoard.placeShip(1, 0, 9, "vertical")).not.toBeNull();
   });
 });

@@ -30,6 +30,7 @@ export class GameBoard {
       console.log("This method requires 4 arguments");
       return null;
     }
+
     if (
       typeof length !== "number" ||
       typeof x !== "number" ||
@@ -39,18 +40,22 @@ export class GameBoard {
       console.log("One or more of the passed arguments are invalid");
       return null;
     }
+
     if (length < 0 || length > 4) {
       console.log("Invalid ship length");
       return null;
     }
+
     if (x > 9 || y > 9) {
       console.log("Invalid coordinates");
       return null;
     }
+
     if (x + length - 1 > 9 || y + length - 1 > 9) {
       console.log("The ship cannot be placed over the border");
       return null;
     }
+
     if (direction !== "horizontal" && direction !== "vertical") {
       console.log("Invalid direction. Must be: 'horizontal' or 'vertical'");
       return null;
@@ -59,12 +64,28 @@ export class GameBoard {
     const ship = new Ship(length);
 
     if (direction === "horizontal") {
+      // Verify if there are occupied positions
+      for (let i = x; i < x + length; i++) {
+        if (this.isOccupied(i, y)) {
+          console.log("One or more coordinates are occupied");
+          return null;
+        }
+      }
+
       for (let i = x; i < x + length; i++) {
         this.board[i][y] = ship;
       }
     }
 
     if (direction === "vertical") {
+      // Verify if there are occupied positions
+      for (let i = y; i < y + length; i++) {
+        if (this.isOccupied(x, i)) {
+          console.log("One or more coordinates are occupied");
+          return null;
+        }
+      }
+
       for (let i = y; i < y + length; i++) {
         this.board[x][i] = ship;
       }
