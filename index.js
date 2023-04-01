@@ -17,11 +17,19 @@ export class Ship {
 export class GameBoard {
   constructor() {
     // Creates a 10x10 board ([x][y])
-    this.board = [...Array(10)].map(() => Array(10));
+    this.board = this.createBoard();
   }
 
-  getBoard() {
-    return this.board;
+  createBoard() {
+    let board = [...Array(10)].map(() => Array(10));
+
+    for (let x = 0; x <= 9; x++) {
+      for (let y = 0; y <= 9; y++) {
+        board[x][y] = { ship: null, hit: false };
+      }
+    }
+
+    return board;
   }
 
   placeShip(length, x, y, direction) {
@@ -73,7 +81,7 @@ export class GameBoard {
       }
 
       for (let i = x; i < x + length; i++) {
-        this.board[i][y] = ship;
+        this.board[i][y].ship = ship;
       }
     }
 
@@ -87,7 +95,7 @@ export class GameBoard {
       }
 
       for (let i = y; i < y + length; i++) {
-        this.board[x][i] = ship;
+        this.board[x][i].ship = ship;
       }
     }
 
@@ -95,7 +103,7 @@ export class GameBoard {
   }
 
   isOccupied(x, y) {
-    return this.board[x][y] !== undefined ? true : false;
+    return this.board[x][y].ship !== null ? true : false;
   }
 
   printBoard() {
@@ -105,7 +113,7 @@ export class GameBoard {
     for (let y = 0; y <= 9; y++) {
       board += `${line++} `;
       for (let x = 0; x <= 9; x++) {
-        if (this.board[x][y] !== undefined) {
+        if (this.board[x][y].ship !== null) {
           board += "■ ";
         } else {
           board += "· ";
