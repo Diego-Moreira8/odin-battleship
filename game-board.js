@@ -61,9 +61,18 @@ export class GameBoard {
       return null;
     }
 
-    if (x + length - 1 > 9 || y + length - 1 > 9) {
-      console.log("The ship cannot be placed over the border");
-      return null;
+    if (direction === "horizontal" && length > 1) {
+      if (x + length > 10) {
+        console.log("Ships cannot be placed over the border");
+        return null;
+      }
+    }
+
+    if (direction === "vertical" && length > 1) {
+      if (y + length > 10) {
+        console.log("Ships cannot be placed over the border");
+        return null;
+      }
     }
 
     if (direction !== "horizontal" && direction !== "vertical") {

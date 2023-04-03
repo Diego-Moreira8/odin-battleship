@@ -38,6 +38,8 @@ describe("Game board - ship placement", () => {
     expect(testBoard.isOccupied(4, 5)).toBeTruthy();
     expect(testBoard.isOccupied(5, 5)).toBeTruthy();
     expect(testBoard.isOccupied(6, 5)).toBeFalsy();
+
+    expect(testBoard.placeShip(4, 3, 9, "horizontal")).not.toBeNull();
   });
 
   test("Vertical placement", () => {
@@ -60,14 +62,14 @@ describe("Game board - ship placement", () => {
 
     expect(testBoard.placeShip(4, 7, 0, "horizontal")).toBeNull();
 
-    expect(testBoard.placeShip(2, 9, 0, "vertical")).toBeNull();
-    expect(testBoard.placeShip(3, 9, 0, "vertical")).toBeNull();
-    expect(testBoard.placeShip(4, 9, 0, "vertical")).toBeNull();
+    expect(testBoard.placeShip(2, 0, 9, "vertical")).toBeNull();
+    expect(testBoard.placeShip(3, 0, 9, "vertical")).toBeNull();
+    expect(testBoard.placeShip(4, 0, 9, "vertical")).toBeNull();
 
-    expect(testBoard.placeShip(3, 8, 0, "vertical")).toBeNull();
-    expect(testBoard.placeShip(4, 8, 0, "vertical")).toBeNull();
+    expect(testBoard.placeShip(3, 0, 8, "vertical")).toBeNull();
+    expect(testBoard.placeShip(4, 0, 8, "vertical")).toBeNull();
 
-    expect(testBoard.placeShip(4, 7, 0, "vertical")).toBeNull();
+    expect(testBoard.placeShip(4, 0, 7, "vertical")).toBeNull();
   });
 
   test("Placing in occupied coordinates", () => {

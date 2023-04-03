@@ -11,7 +11,8 @@
   border: 1px solid #000;
 }
 
-.board {
+#p1-board,
+#p2-board {
   height: 50%;
   border: 1px solid #000;
 
@@ -24,6 +25,6 @@
   width: 100%;
 }
 
-.position:hover {
-  background-color: #ddd;
+.ship-length.active {
+  background-color: #9f9;
 }
