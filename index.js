@@ -14,8 +14,8 @@ function createBoard() {
   player2board.setAttribute("class", "board");
 
   [player1board, player2board].forEach((board) => {
-    for (let x = 0; x <= 9; x++) {
-      for (let y = 0; y <= 9; y++) {
+    for (let y = 0; y <= 9; y++) {
+      for (let x = 0; x <= 9; x++) {
         const position = document.createElement("div");
         position.setAttribute("class", "position");
         position.setAttribute("x-coord", `${x}`);
