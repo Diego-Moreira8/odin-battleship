@@ -11,6 +11,7 @@ function createBoard() {
   const btnsDiv = document.createElement("div");
 
   const rotateBtn = document.createElement("button");
+  rotateBtn.setAttribute("id", "rotate");
   rotateBtn.textContent = "↺";
   btnsDiv.appendChild(rotateBtn);
 
@@ -69,6 +70,12 @@ function placeShips(player) {
 
   let slcPos; // Selected position
   let currLengthBtn = currLengthBtns[0];
+  let currDirection = "horizontal";
+
+  // Updates the direction
+  document.getElementById("rotate").addEventListener("click", () => {
+    currDirection = currDirection === "horizontal" ? "vertical" : "horizontal";
+  });
 
   // Updates the current button length
   currLengthBtns.forEach((btn) => {
@@ -86,6 +93,7 @@ function placeShips(player) {
         y: parseInt(e.target.getAttribute("y-coord")),
       };
 
+      // Place the ship and change the active length button
       if (
         player
           .getBoard()
@@ -93,7 +101,7 @@ function placeShips(player) {
             parseInt(currLengthBtn.innerHTML),
             slcPos.x,
             slcPos.y,
-            "horizontal"
+            currDirection
           ) !== null
       ) {
         currLengthBtn.classList.remove("active");
