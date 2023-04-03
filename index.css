@@ -28,3 +28,7 @@
 .ship-length.active {
   background-color: #9f9;
 }
+
+.ship {
+  background-color: #000;
+}

@@ -86,6 +86,7 @@ function placeShips(player) {
     });
   });
 
+  // Event listeners for the positions
   playerPositions.forEach((pos) => {
     pos.addEventListener("click", (e) => {
       slcPos = {
@@ -104,6 +105,7 @@ function placeShips(player) {
             currDirection
           ) !== null
       ) {
+        refreshBoard(player);
         currLengthBtn.classList.remove("active");
         currLengthBtn.disabled = true;
         for (let btn of currLengthBtns) {
@@ -116,4 +118,16 @@ function placeShips(player) {
       }
     });
   });
+}
+
+function refreshBoard(player) {
+  for (let x = 0; x <= 9; x++) {
+    for (let y = 0; y <= 9; y++) {
+      if (player.getBoard().isOccupied(x, y)) {
+        document
+          .querySelector(`.position[x-coord="${x}"][y-coord="${y}"]`)
+          .classList.add("ship");
+      }
+    }
+  }
 }
