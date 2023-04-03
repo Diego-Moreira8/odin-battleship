@@ -138,3 +138,41 @@ export class GameBoard {
     else return null;
   }
 }
+
+export class Player {
+  constructor() {
+    this.playerBoard = new GameBoard();
+  }
+
+  getBoard() {
+    return this.playerBoard;
+  }
+}
+
+export const cpuPlayer = {
+  player: new Player(),
+  positionShips() {
+    function placeShips(length) {
+      let placed;
+      do {
+        const x = Math.floor(Math.random() * 10);
+        const y = Math.floor(Math.random() * 10);
+        const direction =
+          Math.floor(Math.random() * 2) === 0 ? "horizontal" : "vertical";
+
+        placed = this.player.getBoard().placeShip(length, x, y, direction);
+      } while (placed === null);
+    }
+
+    placeShips.bind(this)(1);
+    placeShips.bind(this)(2);
+    placeShips.bind(this)(3);
+    placeShips.bind(this)(4);
+  },
+  attack(player) {
+    const x = Math.floor(Math.random() * 10);
+    const y = Math.floor(Math.random() * 10);
+
+    return player.getBoard().receiveAttack(x, y);
+  },
+};

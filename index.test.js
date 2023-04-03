@@ -113,5 +113,9 @@ describe("Game board - ship placement", () => {
     expect(testBoard.receiveAttack(1, 2)).not.toBeNull();
     expect(testBoard.receiveAttack(2, 2)).not.toBeNull();
     expect(testBoard.receiveAttack(3, 2)).not.toBeNull();
+    expect(testBoard.receiveAttack(0, 2)).toBeNull();
+    expect(testBoard.receiveAttack(1, 2)).toBeNull();
+    expect(testBoard.receiveAttack(2, 2)).toBeNull();
+    expect(testBoard.receiveAttack(3, 2)).toBeNull();
   });
 });
