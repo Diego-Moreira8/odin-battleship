@@ -100,4 +100,18 @@ describe("Game board - ship placement", () => {
     expect(testBoard.placeShip(4, 0, 1, "vertical")).not.toBeNull();
     expect(testBoard.placeShip(1, 0, 9, "vertical")).not.toBeNull();
   });
+
+  test("Attacking", () => {
+    expect(testBoard.receiveAttack(0, 0)).toBeNull();
+
+    testBoard.placeShip(1, 1, 1, "horizontal");
+    expect(testBoard.receiveAttack(1, 1)).not.toBeNull();
+    expect(testBoard.receiveAttack(1, 1)).toBeNull();
+
+    testBoard.placeShip(4, 0, 2, "horizontal");
+    expect(testBoard.receiveAttack(0, 2)).not.toBeNull();
+    expect(testBoard.receiveAttack(1, 2)).not.toBeNull();
+    expect(testBoard.receiveAttack(2, 2)).not.toBeNull();
+    expect(testBoard.receiveAttack(3, 2)).not.toBeNull();
+  });
 });

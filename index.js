@@ -6,11 +6,13 @@ export class Ship {
   }
 
   hit() {
+    if (this.isSunk()) return null;
     this.hitsTaken++;
+    if (this.hitsTaken === this.length) this.sunk = true;
   }
 
   isSunk() {
-    return this.length === this.hitsTaken ? true : false;
+    return this.sunk;
   }
 }
 
@@ -124,5 +126,15 @@ export class GameBoard {
 
     console.log(board);
     return board;
+  }
+
+  receiveAttack(x, y) {
+    const position = this.board[x][y];
+
+    if (!position.hit) position.hit = true;
+    else return null;
+
+    if (position.ship) position.ship.hit();
+    else return null;
   }
 }
