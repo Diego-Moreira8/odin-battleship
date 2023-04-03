@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+#game-board {
+  width: 250px;
+  height: 500px;
+
+  margin: 32px auto;
+
+  border: 1px solid #000;
+}
+
+.board {
+  height: 50%;
+  border: 1px solid #000;
+
+  display: grid;
+  grid: repeat(10, 1fr) / repeat(10, 1fr);
+}
+
+.position {
+  border: 1px solid #aaa;
+  width: 100%;
+}
+
+.position:hover {
+  background-color: #ddd;
+}
