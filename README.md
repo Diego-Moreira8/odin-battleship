@@ -4,7 +4,8 @@
 
   - Player vs Player
 
-    - Enter names
+    V Enter names
+
     - Ship amount
     - Player 1: place ships
     - Pass...
@@ -30,5 +31,14 @@
     - End game - show results, a restart and a main menu button
 
 # To-dos:
+
+- LOGIC FOR VARIOUS SHIP AMOUNTS:
+
+  - Ships and Sizes:
+    - Carrier 5
+    - Battleship 4
+    - Cruiser 3
+    - Submarine 3
+    - Destroyer 2
 
 - SHOW CURRENT DIRECTION

@@ -23,11 +23,12 @@ function renderMenu() {
 }
 
 async function startPVP() {
-  const player1 = new Player(await requirePlayerName(1));
-  console.log(player1);
-  await renderPassScreen();
-  const player2 = new Player(await requirePlayerName(2));
-  console.log(player2);
+  //const player1 = new Player(await requirePlayerName(1));
+  //console.log(player1);
+  //await renderPassScreen();
+  //const player2 = new Player(await requirePlayerName(2));
+  //console.log(player2);
+  requireShipAmount();
 }
 
 function requirePlayerName(playerNumber) {
@@ -59,6 +60,70 @@ function requirePlayerName(playerNumber) {
       resolve(e.target.name.value);
     });
   });
+}
+
+function requireShipAmount() {
+  // Require players the ship amount that will be used in the game
+  clearPage();
+
+  const title = document.createElement("h2");
+  title.textContent = "Escolham a quantidade de navios";
+  document.body.appendChild(title);
+
+  // Create 5 divs with the ships
+  for (let i = 0; i < 5; i++) {
+    const shipDiv = document.createElement("div");
+
+    const shipName = document.createElement("div");
+    // Switch the ship name
+    switch (i) {
+      case 0:
+        shipName.textContent = "Porta-aviões (tamanho 5)";
+        break;
+      case 1:
+        shipName.textContent = "Couraçado (tamanho 4)";
+        break;
+      case 2:
+        shipName.textContent = "Cruzador (tamanho 3)";
+        break;
+      case 3:
+        shipName.textContent = "Submarino (tamanho 2)";
+        break;
+      case 4:
+        shipName.textContent = "Destróier (tamanho 1)";
+        break;
+    }
+    shipDiv.appendChild(shipName);
+
+    const minusBtn = document.createElement("button");
+    minusBtn.textContent = "-";
+    shipDiv.appendChild(minusBtn);
+    minusBtn.addEventListener("click", (e) => {
+      const counter = e.target.parentElement.querySelector(".ship-amount");
+      counter.textContent = parseInt(counter.textContent) - 1;
+    });
+
+    const shipAmount = document.createElement("span");
+    shipAmount.setAttribute("class", "ship-amount");
+    shipAmount.textContent = i + 1;
+    shipDiv.appendChild(shipAmount);
+
+    const plusBtn = document.createElement("button");
+    plusBtn.textContent = "+";
+    shipDiv.appendChild(plusBtn);
+    plusBtn.addEventListener("click", (e) => {
+      const counter = e.target.parentElement.querySelector(".ship-amount");
+      counter.textContent = parseInt(counter.textContent) + 1;
+    });
+
+    document.body.appendChild(shipDiv);
+  }
+
+  const confirmBtn = document.createElement("button");
+  confirmBtn.textContent = "Começar!";
+  document.body.appendChild(confirmBtn);
+
+  // Event listeners for the - and + buttons
 }
 
 function renderPassScreen() {
