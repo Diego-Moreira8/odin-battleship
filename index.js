@@ -1,3 +1,5 @@
+import { Player } from "./game-board.js";
+
 (function init() {
   renderMenu();
 })();
@@ -21,28 +23,29 @@ function renderMenu() {
 }
 
 async function startPVP() {
-  clearPage();
-  console.log(await requirePlayerName(1));
-  clearPage();
-  console.log(await requirePlayerName(2));
-  clearPage();
+  const player1 = new Player(await requirePlayerName(1));
+  console.log(player1);
+  await renderPassScreen();
+  const player2 = new Player(await requirePlayerName(2));
+  console.log(player2);
 }
 
 function requirePlayerName(playerNumber) {
   // Render the form, and returns a promise of the name input
-  // Name form
+  clearPage();
+
   const form = document.createElement("form");
-  // Label
+
   const label = document.createElement("label");
   label.setAttribute("for", "name");
   label.textContent = `Jogador ${playerNumber}, digite seu nome`;
   form.appendChild(label);
-  // Input
+
   const nameInput = document.createElement("input");
   nameInput.setAttribute("type", "text");
   nameInput.setAttribute("id", "name");
   form.appendChild(nameInput);
-  // Submit btn
+
   const submitBtn = document.createElement("button");
   submitBtn.setAttribute("type", "submit");
   submitBtn.textContent = "Confirmar";
@@ -54,6 +57,25 @@ function requirePlayerName(playerNumber) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       resolve(e.target.name.value);
+    });
+  });
+}
+
+function renderPassScreen() {
+  // Render a pass screen and return a promise of the pressed done button
+  clearPage();
+
+  const msg = document.createElement("div");
+  msg.textContent = "Passe o dispositivo para o(a) rival...";
+  document.body.appendChild(msg);
+
+  const doneBtn = document.createElement("button");
+  doneBtn.textContent = "Pronto!";
+  document.body.appendChild(doneBtn);
+
+  return new Promise((resolve) => {
+    doneBtn.addEventListener("click", () => {
+      resolve();
     });
   });
 }

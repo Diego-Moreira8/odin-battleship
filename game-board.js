@@ -149,7 +149,8 @@ export class GameBoard {
 }
 
 export class Player {
-  constructor() {
+  constructor(_name = "Unnamed") {
+    this.name = _name;
     this.playerBoard = new GameBoard();
   }
 
