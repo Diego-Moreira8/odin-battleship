@@ -23,11 +23,11 @@ function renderMenu() {
 }
 
 async function startPVP() {
-  //const player1 = new Player(await requirePlayerName(1));
-  //console.log(player1);
-  //await renderPassScreen();
-  //const player2 = new Player(await requirePlayerName(2));
-  //console.log(player2);
+  const player1 = new Player(await requirePlayerName(1));
+  console.log(player1);
+  await renderPassScreen();
+  const player2 = new Player(await requirePlayerName(2));
+  console.log(player2);
   requireShipAmount();
 }
 
@@ -73,6 +73,7 @@ function requireShipAmount() {
   // Create 5 divs with the ships
   for (let i = 0; i < 5; i++) {
     const shipDiv = document.createElement("div");
+    shipDiv.setAttribute("class", "ship-amount-group");
 
     const shipName = document.createElement("div");
     // Switch the ship name
@@ -96,34 +97,63 @@ function requireShipAmount() {
     shipDiv.appendChild(shipName);
 
     const minusBtn = document.createElement("button");
+    minusBtn.setAttribute("class", "minus-button");
+    minusBtn.disabled = true;
     minusBtn.textContent = "-";
     shipDiv.appendChild(minusBtn);
-    minusBtn.addEventListener("click", (e) => {
-      const counter = e.target.parentElement.querySelector(".ship-amount");
-      counter.textContent = parseInt(counter.textContent) - 1;
-    });
+    minusBtn.addEventListener("click", updateAmount);
 
     const shipAmount = document.createElement("span");
     shipAmount.setAttribute("class", "ship-amount");
-    shipAmount.textContent = i + 1;
+    shipAmount.textContent = 0;
     shipDiv.appendChild(shipAmount);
 
     const plusBtn = document.createElement("button");
+    plusBtn.setAttribute("class", "plus-button");
     plusBtn.textContent = "+";
     shipDiv.appendChild(plusBtn);
-    plusBtn.addEventListener("click", (e) => {
-      const counter = e.target.parentElement.querySelector(".ship-amount");
-      counter.textContent = parseInt(counter.textContent) + 1;
-    });
+    plusBtn.addEventListener("click", updateAmount);
 
     document.body.appendChild(shipDiv);
+
+    function updateAmount(e) {
+      const counter = e.target.parentElement.querySelector(".ship-amount");
+      const operator = e.target.textContent;
+      if (operator === "+" && sumShips() < 10) {
+        counter.textContent = parseInt(counter.textContent) + 1;
+      } else if (operator === "-" && parseInt(counter.textContent) > 0) {
+        counter.textContent = parseInt(counter.textContent) - 1;
+      }
+      // Add a "disabled" class for the - buttons when amount === 0
+      const shipGroup = document.querySelectorAll(".ship-amount-group");
+      shipGroup.forEach((group) => {
+        group.querySelector(".minus-button").disabled =
+          parseInt(group.querySelector(".ship-amount").textContent) === 0
+            ? true
+            : false;
+      });
+      // Add a "disabled" class for the + buttons when total ships === 10
+      const plusBtns = document.querySelectorAll(".plus-button");
+      if (sumShips() === 10) {
+        plusBtns.forEach((btn) => (btn.disabled = true));
+      } else {
+        plusBtns.forEach((btn) => (btn.disabled = false));
+      }
+    }
+
+    function sumShips() {
+      let sum = 0;
+      const shipAmounts = document.querySelectorAll(".ship-amount");
+      shipAmounts.forEach((el) => {
+        sum += parseInt(el.textContent);
+      });
+      return sum;
+    }
   }
 
   const confirmBtn = document.createElement("button");
   confirmBtn.textContent = "Começar!";
   document.body.appendChild(confirmBtn);
-
-  // Event listeners for the - and + buttons
 }
 
 function renderPassScreen() {
