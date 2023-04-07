@@ -5,8 +5,8 @@
   - Player vs Player
 
     V Enter names
+    V Ship amount
 
-    - Ship amount
     - Player 1: place ships
     - Pass...
     - Player 2: place ships
