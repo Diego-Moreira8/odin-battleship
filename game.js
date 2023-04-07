@@ -1,12 +1,4 @@
-import { Player, cpuPlayer } from "./game-board.js";
-
-function game() {
-  createBoard();
-  const player1 = new Player();
-  placeShips(player1);
-}
-
-function createBoard() {
+export default function createBoard() {
   // Place Ship Buttons and active the first
   const btnsDiv = document.createElement("div");
 
