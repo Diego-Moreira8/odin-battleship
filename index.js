@@ -23,11 +23,11 @@ function renderMenu() {
 }
 
 async function startPVP() {
-  const player1 = new Player(await requirePlayerName(1));
-  console.log(player1);
-  await renderPassScreen();
-  const player2 = new Player(await requirePlayerName(2));
-  console.log(player2);
+  //const player1 = new Player(await requirePlayerName(1));
+  //console.log(player1);
+  //await renderPassScreen();
+  //const player2 = new Player(await requirePlayerName(2));
+  //console.log(player2);
   requireShipAmount();
 }
 
@@ -69,6 +69,10 @@ function requireShipAmount() {
   const title = document.createElement("h2");
   title.textContent = "Escolham a quantidade de navios";
   document.body.appendChild(title);
+
+  const description = document.createElement("div");
+  description.textContent = "Até 10 navios, de qualquer tipo";
+  document.body.appendChild(description);
 
   // Create 5 divs with the ships
   for (let i = 0; i < 5; i++) {
@@ -117,8 +121,10 @@ function requireShipAmount() {
     document.body.appendChild(shipDiv);
 
     function updateAmount(e) {
+      // Update the ship amount and the disabled status for the buttons
       const counter = e.target.parentElement.querySelector(".ship-amount");
       const operator = e.target.textContent;
+
       if (operator === "+" && sumShips() < 10) {
         counter.textContent = parseInt(counter.textContent) + 1;
       } else if (operator === "-" && parseInt(counter.textContent) > 0) {
@@ -139,6 +145,8 @@ function requireShipAmount() {
       } else {
         plusBtns.forEach((btn) => (btn.disabled = false));
       }
+      // Toggle disabled for the start button
+      confirmBtn.disabled = sumShips() > 0 ? false : true;
     }
 
     function sumShips() {
@@ -152,6 +160,7 @@ function requireShipAmount() {
   }
 
   const confirmBtn = document.createElement("button");
+  confirmBtn.disabled = true;
   confirmBtn.textContent = "Começar!";
   document.body.appendChild(confirmBtn);
 }
