@@ -8,7 +8,7 @@ export default async function startPVP() {
   await passScreen();
   const player2 = new Player(await requirePlayerName(2));
   console.log(player2);
-  requireShipAmount();
+  console.log(await requireShipAmount());
 }
 
 function requirePlayerName(playerNumber) {
@@ -43,7 +43,8 @@ function requirePlayerName(playerNumber) {
 }
 
 function requireShipAmount() {
-  // Require players the ship amount that will be used in the game
+  /* Require players the ship amount that will be used in the game 
+  and return a object with the chosen ship config */
   clearPage();
 
   const title = document.createElement("h2");
@@ -143,4 +144,17 @@ function requireShipAmount() {
   confirmBtn.disabled = true;
   confirmBtn.textContent = "Começar!";
   document.body.appendChild(confirmBtn);
+
+  return new Promise((resolve) => {
+    confirmBtn.addEventListener("click", () => {
+      const amounts = document.querySelectorAll(".ship-amount");
+      resolve({
+        shipSize5: parseInt(amounts[0].textContent),
+        shipSize4: parseInt(amounts[1].textContent),
+        shipSize3: parseInt(amounts[2].textContent),
+        shipSize2: parseInt(amounts[3].textContent),
+        shipSize1: parseInt(amounts[4].textContent),
+      });
+    });
+  });
 }
