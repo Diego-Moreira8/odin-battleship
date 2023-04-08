@@ -1,14 +1,17 @@
 import { Player } from "../game-board.js";
 import clearPage from "./clear-page.js";
 import passScreen from "./pass-screen.js";
+import placeShips from "./place-ships.js";
 
 export default async function startPVP() {
-  const player1 = new Player(await requirePlayerName(1));
-  console.log(player1);
-  await passScreen();
-  const player2 = new Player(await requirePlayerName(2));
-  console.log(player2);
-  console.log(await requireShipAmount());
+  // const player1 = new Player(await requirePlayerName(1));
+  // console.log(player1);
+  // await passScreen();
+  // const player2 = new Player(await requirePlayerName(2));
+  // console.log(player2);
+  const shipAmount = await requireShipAmount();
+  // console.log(await placeShips(player1.getName()));
+  await placeShips("Teste", shipAmount);
 }
 
 function requirePlayerName(playerNumber) {

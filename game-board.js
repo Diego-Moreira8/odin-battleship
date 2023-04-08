@@ -154,6 +154,10 @@ export class Player {
     this.playerBoard = new GameBoard();
   }
 
+  getName() {
+    return this.name;
+  }
+
   getBoard() {
     return this.playerBoard;
   }

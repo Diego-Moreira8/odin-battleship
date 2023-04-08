@@ -1,3 +1,11 @@
 * {
   box-sizing: border-box;
 }
+
+.board {
+  height: 400px;
+}
+
+.board-position {
+  border: 1px solid #aaa;
+}

@@ -7,7 +7,7 @@
     V Enter names
     V Ship amount
 
-    - Player 1: place ships
+    - Player 1: place ships (undo button)
     - Pass...
     - Player 2: place ships
     - Pass...
