@@ -9,3 +9,11 @@
 .board-position {
   border: 1px solid #aaa;
 }
+
+.board-position.hover {
+  background-color: #5af;
+}
+
+.board-position.hover-invalid {
+  background-color: #f55;
+}

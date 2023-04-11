@@ -12,6 +12,7 @@ export default async function startPVP() {
   const shipAmount = await requireShipAmount();
   // console.log(await placeShips(player1.getName()));
   await placeShips("Teste", shipAmount);
+  await passScreen();
 }
 
 function requirePlayerName(playerNumber) {

@@ -67,9 +67,66 @@ export default function placeShips(playerName, shipAmount) {
 
   document.body.appendChild(renderBoard());
 
-  // Create buttons with the chosen ships
+  const doneBtn = document.createElement("button");
+  doneBtn.textContent = "Pronto!";
+  document.body.appendChild(doneBtn);
 
-  // return new Promise((resolve) => {
-  //   resolve(0);
-  // });
+  // Hover effect
+  let currPosition = { x: undefined, y: undefined };
+  let hoverSize; // According with the currShip
+  let posToHover = []; // Array with the nodes to be hovered
+  let hoverClass;
+
+  const positions = document.querySelectorAll(".board-position");
+  positions.forEach((pos) => {
+    pos.addEventListener("mouseenter", (e) => {
+      currPosition.x = parseInt(e.target.getAttribute("x-coord"));
+      currPosition.y = parseInt(e.target.getAttribute("y-coord"));
+      hoverSize = parseInt(currShip.slice(-1));
+      posToHover = []; // Reset array
+      // Choose the class that will be added
+      hoverClass =
+        (currDirection === "horizontal" &&
+          hoverSize > 1 &&
+          currPosition.x + hoverSize > 10) ||
+        (currDirection === "vertical" &&
+          hoverSize > 1 &&
+          currPosition.y + hoverSize > 10)
+          ? "hover-invalid"
+          : "hover";
+
+      if (currDirection === "horizontal") {
+        for (let i = 0; i < hoverSize; i++) {
+          posToHover.push(
+            document.querySelector(
+              `[x-coord='${currPosition.x + i}'][y-coord='${currPosition.y}']`
+            )
+          );
+        }
+      } else {
+        for (let i = 0; i < hoverSize; i++) {
+          posToHover.push(
+            document.querySelector(
+              `[x-coord='${currPosition.x}'][y-coord='${currPosition.y + i}']`
+            )
+          );
+        }
+      }
+      posToHover.forEach((pos) => {
+        if (pos !== null) pos.classList.add(hoverClass);
+      });
+    });
+
+    pos.addEventListener("mouseleave", () => {
+      posToHover.forEach((pos) => {
+        if (pos !== null) pos.classList.remove(hoverClass);
+      });
+    });
+  });
+
+  return new Promise((resolve) => {
+    doneBtn.addEventListener("click", () => {
+      resolve();
+    });
+  });
 }
