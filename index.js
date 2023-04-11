@@ -1,7 +1,8 @@
 import startPVP from "./interface/pvp.js";
 
 (function init() {
-  renderMainMenu();
+  //renderMainMenu();
+  startPVP();
 })();
 
 function renderMainMenu() {

@@ -51,7 +51,7 @@ export class GameBoard {
       return null;
     }
 
-    if (length < 0 || length > 4) {
+    if (length < 0 || length > 5) {
       console.log("Invalid ship length");
       return null;
     }

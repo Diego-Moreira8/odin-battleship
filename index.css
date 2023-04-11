@@ -17,3 +17,7 @@
 .board-position.hover-invalid {
   background-color: #f55;
 }
+
+.board-position.occupied {
+  background-color: #222;
+}

@@ -1,11 +1,12 @@
 import clearPage from "./clear-page.js";
 import renderBoard from "./render-board.js";
 
-export default function placeShips(playerName, shipAmount) {
+export default function placeShips(player, shipAmount) {
+  // Render page ###############################################################
   clearPage();
 
   const title = document.createElement("h2");
-  title.textContent = `${playerName}, posicione suas embarcações!`;
+  title.textContent = `${player.getName()}, posicione suas embarcações!`;
   document.body.appendChild(title);
 
   // Div for controls
@@ -71,7 +72,7 @@ export default function placeShips(playerName, shipAmount) {
   doneBtn.textContent = "Pronto!";
   document.body.appendChild(doneBtn);
 
-  // Hover effect
+  // Hover effect ##############################################################
   let currPosition = { x: undefined, y: undefined };
   let hoverSize; // According with the currShip
   let posToHover = []; // Array with the nodes to be hovered
@@ -112,6 +113,7 @@ export default function placeShips(playerName, shipAmount) {
           );
         }
       }
+
       posToHover.forEach((pos) => {
         if (pos !== null) pos.classList.add(hoverClass);
       });
@@ -123,6 +125,29 @@ export default function placeShips(playerName, shipAmount) {
       });
     });
   });
+
+  // Place ship ################################################################
+  positions.forEach((pos) => {
+    pos.addEventListener("click", () => {
+      player
+        .getBoard()
+        .placeShip(hoverSize, currPosition.x, currPosition.y, currDirection);
+
+      syncBoard();
+    });
+  });
+
+  function syncBoard() {
+    for (let y = 0; y <= 9; y++) {
+      for (let x = 0; x <= 9; x++) {
+        if (player.getBoard().isOccupied(x, y)) {
+          document
+            .querySelector(`[x-coord='${x}'][y-coord='${y}']`)
+            .classList.add("occupied");
+        }
+      }
+    }
+  }
 
   return new Promise((resolve) => {
     doneBtn.addEventListener("click", () => {
