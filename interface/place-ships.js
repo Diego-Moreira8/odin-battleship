@@ -37,26 +37,28 @@ export default function placeShips(player, shipAmount) {
       const shipBtn = document.createElement("button");
       switch (key) {
         case "shipSize1":
-          shipBtn.textContent = `Destróier (${shipAmount[key]})`;
-          shipBtn.setAttribute("key", `${key}`);
+          shipBtn.textContent = `Destróier`;
           break;
         case "shipSize2":
-          shipBtn.textContent = `Submarino (${shipAmount[key]})`;
-          shipBtn.setAttribute("key", `${key}`);
+          shipBtn.textContent = `Submarino`;
           break;
         case "shipSize3":
-          shipBtn.textContent = `Cruzador (${shipAmount[key]})`;
-          shipBtn.setAttribute("key", `${key}`);
+          shipBtn.textContent = `Cruzador`;
           break;
         case "shipSize4":
-          shipBtn.textContent = `Couraçado (${shipAmount[key]})`;
-          shipBtn.setAttribute("key", `${key}`);
+          shipBtn.textContent = `Couraçado`;
           break;
         case "shipSize5":
-          shipBtn.textContent = `Porta-aviões (${shipAmount[key]})`;
-          shipBtn.setAttribute("key", `${key}`);
+          shipBtn.textContent = `Porta-aviões`;
           break;
       }
+      shipBtn.setAttribute("key", `${key}`);
+
+      const shipAmountSpan = document.createElement("span");
+      shipAmountSpan.setAttribute("class", "remaining-ships");
+      shipAmountSpan.textContent = shipAmount[key];
+      shipBtn.insertAdjacentElement("beforeend", shipAmountSpan);
+
       shipBtn.addEventListener("click", (e) => {
         currShip = e.target.getAttribute("key");
       });
@@ -134,6 +136,8 @@ export default function placeShips(player, shipAmount) {
         .placeShip(hoverSize, currPosition.x, currPosition.y, currDirection);
 
       syncBoard();
+      shipAmount[currShip] -= 1;
+      updateControlsDiv();
     });
   });
 
@@ -145,6 +149,19 @@ export default function placeShips(player, shipAmount) {
             .querySelector(`[x-coord='${x}'][y-coord='${y}']`)
             .classList.add("occupied");
         }
+      }
+    }
+  }
+
+  function updateControlsDiv() {
+    for (let i = 1; i <= 5; i++) {
+      const btn = document.querySelector(`[key=shipSize${i}]`);
+      const remShips = btn.querySelector(".remaining-ships");
+
+      remShips.textContent = shipAmount[`shipSize${i}`];
+
+      if (shipAmount[`shipSize${i}`] === 0) {
+        btn.disabled = true;
       }
     }
   }
