@@ -17,7 +17,7 @@ export default function placeShips(player, shipAmount) {
   const rotateBtn = document.createElement("button");
   rotateBtn.setAttribute("type", "button");
   rotateBtn.textContent = "↻ Horizontal";
-  rotateBtn.addEventListener("click", (e) => {
+  rotateBtn.addEventListener("click", () => {
     if (rotateBtn.textContent === "↻ Horizontal") {
       rotateBtn.textContent = "↻ Vertical";
       currDirection = "vertical";
@@ -29,10 +29,11 @@ export default function placeShips(player, shipAmount) {
   controlsDiv.appendChild(rotateBtn);
 
   // Ships buttons
-  let currShip;
+  let currShip; // Store a key from the shipAmount object
   for (let key in shipAmount) {
     if (shipAmount[key] > 0) {
-      if (currShip === undefined) currShip = key; // Start with the first btn
+      // Initialize currShip with the biggest ship on the shipAmount object
+      if (currShip === undefined) currShip = key;
 
       const shipBtn = document.createElement("button");
       switch (key) {
@@ -57,37 +58,69 @@ export default function placeShips(player, shipAmount) {
       const shipAmountSpan = document.createElement("span");
       shipAmountSpan.setAttribute("class", "remaining-ships");
       shipAmountSpan.textContent = shipAmount[key];
-      shipBtn.insertAdjacentElement("beforeend", shipAmountSpan);
+      shipBtn.appendChild(shipAmountSpan);
 
       shipBtn.addEventListener("click", (e) => {
         currShip = e.target.getAttribute("key");
       });
+
       controlsDiv.appendChild(shipBtn);
     }
   }
-
   document.body.appendChild(controlsDiv);
 
+  // Board
   document.body.appendChild(renderBoard());
 
+  // Done button
   const doneBtn = document.createElement("button");
+  doneBtn.setAttribute("type", "button");
   doneBtn.textContent = "Pronto!";
   document.body.appendChild(doneBtn);
 
+  // currPosition and hoverSize will be used on hover effects and place ship
+  let currPosition = {
+    x: undefined,
+    y: undefined,
+  };
+  let hoverSize = parseInt(currShip.slice(-1));
+
   // Hover effect ##############################################################
-  let currPosition = { x: undefined, y: undefined };
-  let hoverSize; // According with the currShip
-  let posToHover = []; // Array with the nodes to be hovered
-  let hoverClass;
 
   const positions = document.querySelectorAll(".board-position");
   positions.forEach((pos) => {
+    let positionsToHover = [];
+    let hoverClass;
+
     pos.addEventListener("mouseenter", (e) => {
+      if (currShip === null) return; // Create a error message
+
       currPosition.x = parseInt(e.target.getAttribute("x-coord"));
       currPosition.y = parseInt(e.target.getAttribute("y-coord"));
+
       hoverSize = parseInt(currShip.slice(-1));
-      posToHover = []; // Reset array
-      // Choose the class that will be added
+
+      // Creates an array with the positions that need to be highlighted
+      positionsToHover = [];
+      if (currDirection === "horizontal") {
+        for (let i = 0; i < hoverSize; i++) {
+          positionsToHover.push(
+            document.querySelector(
+              `[x-coord='${currPosition.x + i}'][y-coord='${currPosition.y}']`
+            )
+          );
+        }
+      } else {
+        for (let i = 0; i < hoverSize; i++) {
+          positionsToHover.push(
+            document.querySelector(
+              `[x-coord='${currPosition.x}'][y-coord='${currPosition.y + i}']`
+            )
+          );
+        }
+      }
+
+      // Verify if the position will be valid for placing a ship
       hoverClass =
         (currDirection === "horizontal" &&
           hoverSize > 1 &&
@@ -98,31 +131,22 @@ export default function placeShips(player, shipAmount) {
           ? "hover-invalid"
           : "hover";
 
-      if (currDirection === "horizontal") {
-        for (let i = 0; i < hoverSize; i++) {
-          posToHover.push(
-            document.querySelector(
-              `[x-coord='${currPosition.x + i}'][y-coord='${currPosition.y}']`
-            )
-          );
-        }
-      } else {
-        for (let i = 0; i < hoverSize; i++) {
-          posToHover.push(
-            document.querySelector(
-              `[x-coord='${currPosition.x}'][y-coord='${currPosition.y + i}']`
-            )
-          );
+      // Verify if there are positions occupied
+      for (let entry of positionsToHover) {
+        if (entry !== null && entry.classList.contains("occupied")) {
+          hoverClass = "hover-invalid";
+          break;
         }
       }
 
-      posToHover.forEach((pos) => {
+      // Apply the class
+      positionsToHover.forEach((pos) => {
         if (pos !== null) pos.classList.add(hoverClass);
       });
     });
 
     pos.addEventListener("mouseleave", () => {
-      posToHover.forEach((pos) => {
+      positionsToHover.forEach((pos) => {
         if (pos !== null) pos.classList.remove(hoverClass);
       });
     });
@@ -131,6 +155,8 @@ export default function placeShips(player, shipAmount) {
   // Place ship ################################################################
   positions.forEach((pos) => {
     pos.addEventListener("click", () => {
+      if (currShip === null) return; // Create a error message
+
       player
         .getBoard()
         .placeShip(hoverSize, currPosition.x, currPosition.y, currDirection);
@@ -154,6 +180,7 @@ export default function placeShips(player, shipAmount) {
   }
 
   function updateControlsDiv() {
+    // Update ship amounts and disable when hits 0
     for (let i = 1; i <= 5; i++) {
       const btn = document.querySelector(`[key=shipSize${i}]`);
       const remShips = btn.querySelector(".remaining-ships");
@@ -164,6 +191,19 @@ export default function placeShips(player, shipAmount) {
         btn.disabled = true;
       }
     }
+
+    // Update currShip
+    let shipAvailable = false;
+
+    for (let key in shipAmount) {
+      if (shipAmount[key] > 0) {
+        shipAvailable = true;
+        currShip = key;
+        break;
+      }
+    }
+
+    if (!shipAvailable) currShip = null;
   }
 
   return new Promise((resolve) => {
