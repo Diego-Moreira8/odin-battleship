@@ -109,8 +109,6 @@ export class GameBoard {
         this.board[x][i].ship = ship;
       }
     }
-
-    this.printBoard();
   }
 
   isOccupied(x, y) {

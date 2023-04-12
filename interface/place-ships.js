@@ -1,7 +1,8 @@
 import clearPage from "./clear-page.js";
 import renderBoard from "./render-board.js";
 
-export default function placeShips(player, shipAmount) {
+export default function placeShips(player, passedShipAmount) {
+  let shipAmount = structuredClone(passedShipAmount);
   // Render page ###############################################################
   clearPage();
 
@@ -190,6 +191,8 @@ export default function placeShips(player, shipAmount) {
     // Update ship amounts and disable when hits 0
     for (let i = 1; i <= 5; i++) {
       const btn = document.querySelector(`[key=shipSize${i}]`);
+      if (btn === null) continue; // Btn not present, skip it
+
       const remShips = btn.querySelector(".remaining-ships");
 
       remShips.textContent = shipAmount[`shipSize${i}`];
