@@ -2,7 +2,9 @@ import clearPage from "./clear-page.js";
 import renderBoard from "./render-board.js";
 
 export default function placeShips(player, passedShipAmount) {
+  // Clone shipAmount so this function doesn't make changes on the passed object
   let shipAmount = structuredClone(passedShipAmount);
+
   // Render page ###############################################################
   clearPage();
 
@@ -76,6 +78,7 @@ export default function placeShips(player, passedShipAmount) {
   // Done button
   const doneBtn = document.createElement("button");
   doneBtn.setAttribute("type", "button");
+  doneBtn.disabled = true;
   doneBtn.textContent = "Pronto!";
   document.body.appendChild(doneBtn);
 
@@ -171,6 +174,7 @@ export default function placeShips(player, passedShipAmount) {
         syncBoard();
         shipAmount[currShip] -= 1;
         updateControlsDiv();
+        doneButtonStatus();
       }
     });
   });
@@ -214,6 +218,13 @@ export default function placeShips(player, passedShipAmount) {
     }
 
     if (!shipAvailable) currShip = null;
+  }
+
+  function doneButtonStatus() {
+    // Verify if there are remaining ships. If no, enables the done button
+    let counter = 0;
+    for (let key in shipAmount) counter += shipAmount[key];
+    doneBtn.disabled = counter > 0 ? true : false;
   }
 
   return new Promise((resolve) => {

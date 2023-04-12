@@ -4,13 +4,24 @@ import passScreen from "./pass-screen.js";
 import placeShips from "./place-ships.js";
 
 export default async function startPVP() {
-  const player1 = new Player(await requirePlayerName(1));
-  await passScreen();
-  const player2 = new Player(await requirePlayerName(2));
-  const shipAmount = await requireShipAmount();
-  await placeShips(player1, shipAmount);
-  await passScreen();
-  await placeShips(player2, shipAmount);
+  //const player1 = new Player(await requirePlayerName(1));
+  //await passScreen();
+  //const player2 = new Player(await requirePlayerName(2));
+  //const shipAmount = await requireShipAmount();
+  //await placeShips(player1, shipAmount);
+  //await passScreen();
+  //await placeShips(player2, shipAmount);
+  //await passScreen();
+
+  // Simulating...
+  const testPlayer = new Player("Teste");
+  await placeShips(testPlayer, {
+    shipSize5: 2,
+    shipSize4: 2,
+    shipSize3: 2,
+    shipSize2: 2,
+    shipSize1: 2,
+  });
 }
 
 function requirePlayerName(playerNumber) {
