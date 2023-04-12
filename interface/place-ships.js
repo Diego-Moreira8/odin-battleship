@@ -157,13 +157,20 @@ export default function placeShips(player, shipAmount) {
     pos.addEventListener("click", () => {
       if (currShip === null) return; // Create a error message
 
-      player
-        .getBoard()
-        .placeShip(hoverSize, currPosition.x, currPosition.y, currDirection);
-
-      syncBoard();
-      shipAmount[currShip] -= 1;
-      updateControlsDiv();
+      if (
+        player
+          .getBoard()
+          .placeShip(
+            hoverSize,
+            currPosition.x,
+            currPosition.y,
+            currDirection
+          ) !== null
+      ) {
+        syncBoard();
+        shipAmount[currShip] -= 1;
+        updateControlsDiv();
+      }
     });
   });
 
