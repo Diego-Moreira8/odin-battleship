@@ -16,11 +16,11 @@ export default async function startPVP() {
   // Simulating...
   const testPlayer = new Player("Teste");
   await placeShips(testPlayer, {
-    shipSize5: 2,
-    shipSize4: 2,
-    shipSize3: 2,
-    shipSize2: 2,
-    shipSize1: 2,
+    shipSize5: 1,
+    shipSize4: 1,
+    shipSize3: 1,
+    shipSize2: 1,
+    shipSize1: 1,
   });
 }
 

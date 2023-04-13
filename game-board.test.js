@@ -22,9 +22,9 @@ describe("Game board - ship placement", () => {
     expect(testBoard.placeShip(1, 10, 10, "horizontal")).toBeNull();
     expect(testBoard.placeShip(1, 1, 1, "wrong string")).toBeNull();
     expect(testBoard.placeShip(-1, 0, 0, "horizontal")).toBeNull();
-    expect(testBoard.placeShip(5, 0, 0, "horizontal")).toBeNull();
-    expect(testBoard.placeShip(5, 0, 0, 0, "horizontal")).toBeNull();
-    expect(testBoard.placeShip(5)).toBeNull();
+    expect(testBoard.placeShip(6, 0, 0, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(6, 0, 0, 0, "horizontal")).toBeNull();
+    expect(testBoard.placeShip(6)).toBeNull();
     expect(testBoard.placeShip("a", 0, 0, "vertical")).toBeNull();
     expect(testBoard.placeShip(1, "a", 0, "vertical")).toBeNull();
     expect(testBoard.placeShip(1, 0, "a", "vertical")).toBeNull();

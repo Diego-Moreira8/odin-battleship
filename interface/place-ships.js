@@ -15,6 +15,12 @@ export default function placeShips(player, passedShipAmount) {
   // Div for controls
   const controlsDiv = document.createElement("div");
 
+  // Delete button
+  const deleteShipBtn = document.createElement("button");
+  deleteShipBtn.setAttribute("type", "button");
+  deleteShipBtn.textContent = "Apagar embarcação";
+  controlsDiv.appendChild(deleteShipBtn);
+
   // Rotate button
   let currDirection = "horizontal";
   const rotateBtn = document.createElement("button");
@@ -82,19 +88,16 @@ export default function placeShips(player, passedShipAmount) {
   doneBtn.textContent = "Pronto!";
   document.body.appendChild(doneBtn);
 
-  // currPosition and hoverSize will be used on hover effects and place ship
-  let currPosition = {
-    x: undefined,
-    y: undefined,
-  };
-  let hoverSize = parseInt(currShip.slice(-1));
-
   // Hover effect ##############################################################
-
   const positions = document.querySelectorAll(".board-position");
   positions.forEach((pos) => {
+    let currPosition = {
+      x: undefined,
+      y: undefined,
+    };
     let positionsToHover = [];
     let hoverClass;
+    let hoverSize;
 
     pos.addEventListener("mouseenter", (e) => {
       if (currShip === null) return; // Create a error message
@@ -158,16 +161,16 @@ export default function placeShips(player, passedShipAmount) {
 
   // Place ship ################################################################
   positions.forEach((pos) => {
-    pos.addEventListener("click", () => {
+    pos.addEventListener("click", (e) => {
       if (currShip === null) return; // Create a error message
 
       if (
         player
           .getBoard()
           .placeShip(
-            hoverSize,
-            currPosition.x,
-            currPosition.y,
+            parseInt(currShip.slice(-1)),
+            parseInt(e.target.getAttribute("x-coord")),
+            parseInt(e.target.getAttribute("y-coord")),
             currDirection
           ) !== null
       ) {
