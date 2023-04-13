@@ -121,3 +121,45 @@ describe("Game board - ship placement", () => {
     expect(testBoard.receiveAttack(3, 2)).toBeNull();
   });
 });
+
+describe("Delete ship", () => {
+  let testBoard;
+
+  beforeEach(() => {
+    testBoard = new GameBoard();
+  });
+
+  test("Delete on unoccupied coordinates", () => {
+    expect(testBoard.deleteShip(0, 0)).toBeNull();
+  });
+
+  test("Delete a length 1 ship", () => {
+    testBoard.placeShip(1, 0, 0, "horizontal");
+    expect(testBoard.deleteShip(0, 0)).not.toBeNull();
+    expect(testBoard.isOccupied(0, 0)).toBeFalsy();
+  });
+
+  test("Delete a length 2 ship", () => {
+    testBoard.placeShip(2, 0, 0, "horizontal");
+    expect(testBoard.deleteShip(0, 0)).not.toBeNull();
+    expect(testBoard.isOccupied(0, 0)).toBeFalsy();
+    expect(testBoard.isOccupied(1, 0)).toBeFalsy();
+  });
+
+  test("Delete among other ships", () => {
+    testBoard.placeShip(4, 0, 0, "horizontal");
+    testBoard.placeShip(4, 0, 1, "horizontal");
+
+    expect(testBoard.deleteShip(0, 0)).not.toBeNull();
+
+    expect(testBoard.isOccupied(0, 0)).toBeFalsy();
+    expect(testBoard.isOccupied(1, 0)).toBeFalsy();
+    expect(testBoard.isOccupied(2, 0)).toBeFalsy();
+    expect(testBoard.isOccupied(3, 0)).toBeFalsy();
+
+    expect(testBoard.isOccupied(0, 1)).toBeTruthy();
+    expect(testBoard.isOccupied(1, 1)).toBeTruthy();
+    expect(testBoard.isOccupied(2, 1)).toBeTruthy();
+    expect(testBoard.isOccupied(3, 1)).toBeTruthy();
+  });
+});

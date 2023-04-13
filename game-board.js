@@ -1,8 +1,15 @@
 export class Ship {
-  constructor(_length) {
+  constructor(_length, _shipID) {
     this.length = _length;
+    // this.startPosition = { x: _xCoord, y: _yCoord };
+    // this.direction = _direction;
+    this.shipID = _shipID;
     this.hitsTaken = 0;
     this.sunk = false;
+  }
+
+  getID() {
+    return this.shipID;
   }
 
   hit() {
@@ -14,12 +21,25 @@ export class Ship {
   isSunk() {
     return this.sunk;
   }
+
+  // getLength() {
+  //   return this.length;
+  // }
+
+  // getStartPosition() {
+  //   return this.startPosition;
+  // }
+
+  // getDirection() {
+  //   return this.direction;
+  // }
 }
 
 export class GameBoard {
   constructor() {
     // Creates a 10x10 board ([x][y])
     this.board = this.createBoard();
+    this.shipsPlaced = 0; // This will be the ID of the placed ships
   }
 
   createBoard() {
@@ -80,7 +100,7 @@ export class GameBoard {
       return null;
     }
 
-    const ship = new Ship(length);
+    const ship = new Ship(length, ++this.shipsPlaced);
 
     if (direction === "horizontal") {
       // Verify if there are occupied positions
@@ -143,6 +163,24 @@ export class GameBoard {
 
     if (position.ship) position.ship.hit();
     else return null;
+  }
+
+  deleteShip(x, y) {
+    // Delete the ship that occupies the given coordinates
+    if (!this.isOccupied(x, y)) {
+      console.log("There is no ship to be deleted");
+      return null;
+    }
+    const shipID = this.board[x][y].ship.getID();
+
+    for (let y = 0; y <= 9; y++) {
+      for (let x = 0; x <= 9; x++) {
+        const currShip = this.board[x][y].ship;
+        if (currShip !== null && currShip.getID() === shipID) {
+          this.board[x][y] = { ship: null, hit: false };
+        }
+      }
+    }
   }
 }
 
