@@ -186,6 +186,7 @@ export default function placeShips(player, passedShipAmount) {
 
         updateControlsDiv();
         syncBoard();
+        doneButtonStatus();
         return;
       }
 
@@ -195,9 +196,9 @@ export default function placeShips(player, passedShipAmount) {
       // If placing a ship
       const length = currShip === null ? null : parseInt(currShip.slice(-1));
       if (player.getBoard().placeShip(length, x, y, currDirection) !== null) {
-        syncBoard();
         shipAmount[currShip] -= 1;
         updateControlsDiv();
+        syncBoard();
         doneButtonStatus();
       }
     });
