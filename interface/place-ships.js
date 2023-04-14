@@ -20,6 +20,9 @@ export default function placeShips(player, passedShipAmount) {
   deleteShipBtn.setAttribute("type", "button");
   deleteShipBtn.textContent = "Apagar embarcação";
   controlsDiv.appendChild(deleteShipBtn);
+  deleteShipBtn.addEventListener("click", (e) => {
+    e.target.classList.add("active");
+  });
 
   // Rotate button
   let currDirection = "horizontal";
@@ -70,6 +73,7 @@ export default function placeShips(player, passedShipAmount) {
       shipBtn.appendChild(shipAmountSpan);
 
       shipBtn.addEventListener("click", (e) => {
+        deleteShipBtn.classList.remove("active");
         currShip = e.target.getAttribute("key");
       });
 
@@ -100,6 +104,10 @@ export default function placeShips(player, passedShipAmount) {
     let hoverSize;
 
     pos.addEventListener("mouseenter", (e) => {
+      if (deleteShipBtn.classList.contains("active")) {
+        return;
+      }
+
       if (currShip === null) return; // Create a error message
 
       currPosition.x = parseInt(e.target.getAttribute("x-coord"));
@@ -159,21 +167,34 @@ export default function placeShips(player, passedShipAmount) {
     });
   });
 
-  // Place ship ################################################################
+  // Place/delete ship #########################################################
   positions.forEach((pos) => {
     pos.addEventListener("click", (e) => {
+      const x = parseInt(e.target.getAttribute("x-coord"));
+      const y = parseInt(e.target.getAttribute("y-coord"));
+
+      // If deleting ship button is active:
+      if (deleteShipBtn.classList.contains("active")) {
+        let recoveredShip = player.getBoard().deleteShip(x, y);
+
+        if (recoveredShip === null) return;
+
+        // Finds the recovered ship in the shipAmount object and increments it
+        for (let key in shipAmount)
+          if (parseInt(key.slice(-1)) === recoveredShip.length)
+            shipAmount[key] += 1;
+
+        updateControlsDiv();
+        syncBoard();
+        return;
+      }
+
+      // If there are no ships left
       if (currShip === null) return; // Create a error message
 
-      if (
-        player
-          .getBoard()
-          .placeShip(
-            parseInt(currShip.slice(-1)),
-            parseInt(e.target.getAttribute("x-coord")),
-            parseInt(e.target.getAttribute("y-coord")),
-            currDirection
-          ) !== null
-      ) {
+      // If placing a ship
+      const length = currShip === null ? null : parseInt(currShip.slice(-1));
+      if (player.getBoard().placeShip(length, x, y, currDirection) !== null) {
         syncBoard();
         shipAmount[currShip] -= 1;
         updateControlsDiv();
@@ -183,15 +204,18 @@ export default function placeShips(player, passedShipAmount) {
   });
 
   function syncBoard() {
-    for (let y = 0; y <= 9; y++) {
-      for (let x = 0; x <= 9; x++) {
-        if (player.getBoard().isOccupied(x, y)) {
+    // Reset classes of the positions
+    document
+      .querySelectorAll(".occupied")
+      .forEach((el) => el.classList.remove("occupied"));
+
+    // Apply the "occupied" class
+    for (let y = 0; y <= 9; y++)
+      for (let x = 0; x <= 9; x++)
+        if (player.getBoard().isOccupied(x, y))
           document
             .querySelector(`[x-coord='${x}'][y-coord='${y}']`)
             .classList.add("occupied");
-        }
-      }
-    }
   }
 
   function updateControlsDiv() {
@@ -204,9 +228,7 @@ export default function placeShips(player, passedShipAmount) {
 
       remShips.textContent = shipAmount[`shipSize${i}`];
 
-      if (shipAmount[`shipSize${i}`] === 0) {
-        btn.disabled = true;
-      }
+      btn.disabled = shipAmount[`shipSize${i}`] === 0 ? true : false;
     }
 
     // Update currShip

@@ -166,12 +166,15 @@ export class GameBoard {
   }
 
   deleteShip(x, y) {
-    // Delete the ship that occupies the given coordinates
+    /* Delete the ship that occupies the given coordinates and 
+    returns the deleted ship if succeed or null if fail*/
     if (!this.isOccupied(x, y)) {
       console.log("There is no ship to be deleted");
       return null;
     }
+
     const shipID = this.board[x][y].ship.getID();
+    const shipCopy = this.board[x][y].ship;
 
     for (let y = 0; y <= 9; y++) {
       for (let x = 0; x <= 9; x++) {
@@ -181,6 +184,8 @@ export class GameBoard {
         }
       }
     }
+
+    return shipCopy;
   }
 }
 
