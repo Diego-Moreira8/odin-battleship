@@ -16,6 +16,15 @@ export default function placeShips(player, passedShipAmount) {
   document.body.appendChild(renderBoard());
   hoverEffect();
   clickPositionAction(player, shipAmount);
+
+  // This function will return when doneBtn is clicked
+  const doneBtn = doneButton();
+  return new Promise((resolve) => {
+    doneBtn.addEventListener("click", () => {
+      alert();
+      resolve();
+    });
+  });
 }
 
 function renderOptionsDiv(shipAmount) {
@@ -102,13 +111,22 @@ function hoverEffect() {
   positions.forEach((position) => {
     ["mouseenter", "mouseleave"].forEach((event) => {
       position.addEventListener(event, () => {
+        /* Clear the hover classes to prevent the class to not be removed
+        when place ship*/
+        document.querySelectorAll(".place-hover").forEach((el) => {
+          el.classList.remove("place-hover");
+        });
+
         // Hover to delete
         const deleteShipBtn = document.querySelector("#delete-ship");
         if (deleteShipBtn.classList.contains("active")) {
           position.classList.toggle("delete-hover");
+          return;
         }
 
         // Hover to place ship
+        if (isOutOfShips()) return;
+
         const currDirection = document
           .querySelector("#direction")
           .getAttribute("data-current-direction");
@@ -158,42 +176,45 @@ function clickPositionAction(player, shipAmount) {
   const positions = document.querySelectorAll(".board-position");
   positions.forEach((position) => {
     position.addEventListener("click", () => {
+      // Current ship coordinates
+      const x = parseInt(position.getAttribute("x-coord"));
+      const y = parseInt(position.getAttribute("y-coord"));
+
       // Delete ship
       const deleteShipBtn = document.querySelector("#delete-ship");
       if (deleteShipBtn.classList.contains("active")) {
+        const recoveredShip = player.getBoard().deleteShip(x, y);
+        if (recoveredShip === null) return;
+        // Finds the recovered ship in the shipAmount object and increments it
+        for (let key in shipAmount)
+          if (parseInt(key.slice(-1)) === recoveredShip.length) {
+            shipAmount[key] += 1;
+          }
+
+        updateControlsDiv();
+        syncBoard();
         return;
       }
 
-      // Placing ship
-      const currPosition = {
-        x: parseInt(position.getAttribute("x-coord")),
-        y: parseInt(position.getAttribute("y-coord")),
-      };
+      if (isOutOfShips()) return;
 
-      const currDirection = document
+      // Place ship
+      const direction = document
         .querySelector("#direction")
         .getAttribute("data-current-direction");
-
-      const currShipLength = parseInt(
+      const length = parseInt(
         document.querySelector(".ship.active").getAttribute("key").slice(-1)
       );
-
-      if (
-        player
-          .getBoard()
-          .placeShip(
-            currShipLength,
-            currPosition.x,
-            currPosition.y,
-            currDirection
-          ) !== null
-      ) {
+      // If succeed on placing ship
+      if (player.getBoard().placeShip(length, x, y, direction) !== null) {
         const currentShipKey = document
           .querySelector(".ship.active")
           .getAttribute("key");
         shipAmount[currentShipKey] -= 1;
         syncBoard();
-        updateControlsDiv(currentShipKey);
+        updateControlsDiv();
+
+        if (isOutOfShips()) document.querySelector("#done").disabled = false;
       }
     });
   });
@@ -213,24 +234,41 @@ function clickPositionAction(player, shipAmount) {
             .classList.add("occupied");
   }
 
-  function updateControlsDiv(currentShipKey) {
-    // Update ship amounts and disable when hits 0
-    const btn = document.querySelector(".ship.active");
-    btn.classList.remove("active");
-    const remShips = btn.querySelector(".remaining-ships");
-    remShips.textContent = shipAmount[currentShipKey];
-    btn.disabled = shipAmount[currentShipKey] === 0 ? true : false;
+  function updateControlsDiv() {
+    document.querySelectorAll(".ship").forEach((btn) => {
+      btn.classList.remove("active");
+      const remShips = btn.querySelector(".remaining-ships");
+      const key = btn.getAttribute("key");
+      remShips.textContent = shipAmount[key];
+      btn.disabled = shipAmount[key] === 0 ? true : false;
+    });
 
     // Update currShip
     const shipsBtns = document.querySelectorAll(".ship");
     for (let btn of shipsBtns) {
-      console.log(btn);
       if (!btn.disabled) {
         btn.classList.add("active");
         break;
       }
     }
   }
+}
+
+function isOutOfShips() {
+  // Verify if out of ships
+  let shipBtns = Array.from(document.querySelectorAll(".ship"));
+  // If all buttons are disabled, return
+  return shipBtns.reduce((acc, cur) => acc && cur.disabled);
+}
+
+function doneButton() {
+  const doneBtn = document.createElement("button");
+  doneBtn.setAttribute("type", "button");
+  doneBtn.setAttribute("id", "done");
+  doneBtn.disabled = true;
+  doneBtn.textContent = "Pronto!";
+  document.body.appendChild(doneBtn);
+  return doneBtn;
 }
 
 function placeShipsOld(player, passedShipAmount) {
