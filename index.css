@@ -10,12 +10,16 @@
   border: 1px solid #aaa;
 }
 
-.board-position.hover {
+.board-position.place-hover {
   background-color: #5af;
 }
 
-.board-position.hover-invalid {
+.board-position.place-hover-invalid {
   background-color: #f55;
+}
+
+.board-position.delete-hover {
+  border: 2px solid #f55;
 }
 
 .board-position.occupied {
