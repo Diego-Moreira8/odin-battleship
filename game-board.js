@@ -187,6 +187,10 @@ export class GameBoard {
 
     return shipCopy;
   }
+
+  isHit(x, y) {
+    return this.board[x][y].hit;
+  }
 }
 
 export class Player {

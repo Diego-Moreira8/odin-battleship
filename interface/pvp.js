@@ -2,6 +2,7 @@ import { Player } from "../game-board.js";
 import clearPage from "./clear-page.js";
 import passScreen from "./pass-screen.js";
 import placeShips from "./place-ships.js";
+import gameBoard from "./game-board.js";
 
 export default async function startPVP() {
   //const player1 = new Player(await requirePlayerName(1));
@@ -14,14 +15,17 @@ export default async function startPVP() {
   //await passScreen();
 
   // Simulating...
-  const testPlayer = new Player("Teste");
-  await placeShips(testPlayer, {
-    shipSize5: 1,
-    shipSize4: 1,
-    shipSize3: 1,
-    shipSize2: 1,
-    shipSize1: 1,
-  });
+  const player1 = new Player("Jogardor teste 1");
+  const player2 = new Player("Jogardor teste 2");
+  player1.getBoard().placeShip(4, 2, 2, "horizontal");
+  player2.getBoard().placeShip(4, 2, 2, "vertical");
+
+  player2.getBoard().receiveAttack(0, 0);
+  player2.getBoard().receiveAttack(2, 2);
+  player2.getBoard().receiveAttack(9, 9);
+
+  // Game loop
+  gameBoard(player1, player2);
 }
 
 function requirePlayerName(playerNumber) {

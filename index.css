@@ -3,7 +3,11 @@
 }
 
 .board {
-  height: 400px;
+  height: 200px;
+  width: 200px;
+  margin: 25px auto;
+
+  border: 2px solid #000;
 }
 
 .board-position {
@@ -24,4 +28,12 @@
 
 .board-position.occupied {
   background-color: #222;
+}
+
+.board-position.water {
+  background-color: #005;
+}
+
+.board-position.hit {
+  background-color: #f55;
 }

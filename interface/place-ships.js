@@ -21,7 +21,6 @@ export default function placeShips(player, passedShipAmount) {
   const doneBtn = doneButton();
   return new Promise((resolve) => {
     doneBtn.addEventListener("click", () => {
-      alert();
       resolve();
     });
   });
@@ -110,11 +109,11 @@ function hoverEffect() {
   const positions = document.querySelectorAll(".board-position");
   positions.forEach((position) => {
     position.addEventListener("mouseenter", () => {
-      /* Clear the hover classes to prevent the class to not be removed
-        after place a ship*/
+      // Reset positions
       document
-        .querySelectorAll(".place-hover, .place-hover-invalid")
+        .querySelectorAll(".delete-hover, .place-hover, .place-hover-invalid")
         .forEach((el) => {
+          el.classList.remove("delete-hover");
           el.classList.remove("place-hover");
           el.classList.remove("place-hover-invalid");
         });
@@ -122,7 +121,7 @@ function hoverEffect() {
       // Hover to delete
       const deleteShipBtn = document.querySelector("#delete-ship");
       if (deleteShipBtn.classList.contains("active")) {
-        position.classList.toggle("delete-hover");
+        position.classList.add("delete-hover");
         return;
       }
 
@@ -181,7 +180,7 @@ function hoverEffect() {
 
       // Set the chosen class
       toBeHovered.forEach((el) => {
-        if (el !== null) el.classList.toggle(hoverClass);
+        if (el !== null) el.classList.add(hoverClass);
       });
     });
   });
