@@ -20,6 +20,9 @@ export default async function startPVP() {
   player1.getBoard().placeShip(4, 2, 2, "horizontal");
   player2.getBoard().placeShip(4, 2, 2, "vertical");
 
+  player1.getBoard().receiveAttack(0, 0);
+  player1.getBoard().receiveAttack(3, 2);
+
   player2.getBoard().receiveAttack(0, 0);
   player2.getBoard().receiveAttack(2, 2);
   player2.getBoard().receiveAttack(9, 9);
