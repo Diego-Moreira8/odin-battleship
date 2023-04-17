@@ -109,81 +109,79 @@ function renderOptionsDiv(shipAmount) {
 function hoverEffect() {
   const positions = document.querySelectorAll(".board-position");
   positions.forEach((position) => {
-    ["mouseenter", "mouseleave"].forEach((event) => {
-      position.addEventListener(event, () => {
-        /* Clear the hover classes to prevent the class to not be removed
+    position.addEventListener("mouseenter", () => {
+      /* Clear the hover classes to prevent the class to not be removed
         after place a ship*/
-        document
-          .querySelectorAll(".place-hover, .place-hover-invalid")
-          .forEach((el) => {
-            el.classList.remove("place-hover");
-            el.classList.remove("place-hover-invalid");
-          });
-
-        // Hover to delete
-        const deleteShipBtn = document.querySelector("#delete-ship");
-        if (deleteShipBtn.classList.contains("active")) {
-          position.classList.toggle("delete-hover");
-          return;
-        }
-
-        // Hover to place ship
-        if (isOutOfShips()) return;
-        const currDirection = document
-          .querySelector("#direction")
-          .getAttribute("data-current-direction");
-
-        const currShipLength = parseInt(
-          document.querySelector(".ship.active").getAttribute("key").slice(-1)
-        );
-
-        const x = parseInt(position.getAttribute("x-coord"));
-        const y = parseInt(position.getAttribute("y-coord"));
-
-        // Creates an array with the positions to be hovered
-        const toBeHovered = [];
-        let hoverClass = "place-hover";
-
-        // Search for invalid positions and populates toBeHovered
-        if (currDirection === "horizontal") {
-          for (let i = 0; i < currShipLength; i++) {
-            const position = document.querySelector(
-              `[x-coord='${x + i}'][y-coord='${y}']`
-            );
-
-            // If the ship cross the edge or finds an occupied position
-            if (
-              (position !== null &&
-                currShipLength > 1 &&
-                x + currShipLength > 10) ||
-              (position !== null && position.classList.contains("occupied"))
-            )
-              hoverClass = "place-hover-invalid";
-
-            toBeHovered.push(position);
-          }
-        } else if (currDirection === "vertical") {
-          for (let i = 0; i < currShipLength; i++) {
-            const position = document.querySelector(
-              `[x-coord='${x}'][y-coord='${y + i}']`
-            );
-            // If the ship cross the edge or finds an occupied position
-            if (
-              (position !== null &&
-                currShipLength > 1 &&
-                y + currShipLength > 10) ||
-              (position !== null && position.classList.contains("occupied"))
-            )
-              hoverClass = "place-hover-invalid";
-
-            toBeHovered.push(position);
-          }
-        }
-
-        // Set the chosen class
-        toBeHovered.forEach((el) => {
-          if (el !== null) el.classList.toggle(hoverClass);
+      document
+        .querySelectorAll(".place-hover, .place-hover-invalid")
+        .forEach((el) => {
+          el.classList.remove("place-hover");
+          el.classList.remove("place-hover-invalid");
         });
+
+      // Hover to delete
+      const deleteShipBtn = document.querySelector("#delete-ship");
+      if (deleteShipBtn.classList.contains("active")) {
+        position.classList.toggle("delete-hover");
+        return;
+      }
+
+      // Hover to place ship
+      if (isOutOfShips()) return;
+      const currDirection = document
+        .querySelector("#direction")
+        .getAttribute("data-current-direction");
+
+      const currShipLength = parseInt(
+        document.querySelector(".ship.active").getAttribute("key").slice(-1)
+      );
+
+      const x = parseInt(position.getAttribute("x-coord"));
+      const y = parseInt(position.getAttribute("y-coord"));
+
+      // Creates an array with the positions to be hovered
+      const toBeHovered = [];
+      let hoverClass = "place-hover";
+
+      // Search for invalid positions and populates toBeHovered
+      if (currDirection === "horizontal") {
+        for (let i = 0; i < currShipLength; i++) {
+          const position = document.querySelector(
+            `[x-coord='${x + i}'][y-coord='${y}']`
+          );
+
+          // If the ship cross the edge or finds an occupied position
+          if (
+            (position !== null &&
+              currShipLength > 1 &&
+              x + currShipLength > 10) ||
+            (position !== null && position.classList.contains("occupied"))
+          )
+            hoverClass = "place-hover-invalid";
+
+          toBeHovered.push(position);
+        }
+      } else if (currDirection === "vertical") {
+        for (let i = 0; i < currShipLength; i++) {
+          const position = document.querySelector(
+            `[x-coord='${x}'][y-coord='${y + i}']`
+          );
+          // If the ship cross the edge or finds an occupied position
+          if (
+            (position !== null &&
+              currShipLength > 1 &&
+              y + currShipLength > 10) ||
+            (position !== null && position.classList.contains("occupied"))
+          )
+            hoverClass = "place-hover-invalid";
+
+          toBeHovered.push(position);
+        }
+      }
+
+      // Set the chosen class
+      toBeHovered.forEach((el) => {
+        if (el !== null) el.classList.toggle(hoverClass);
       });
     });
   });
