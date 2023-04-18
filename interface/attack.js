@@ -6,6 +6,7 @@ export default function attackScreen(currentPlayer, rivalPlayer) {
   popUpAttackResult();
   header(currentPlayer);
   getBoards(currentPlayer, rivalPlayer);
+  getShips(currentPlayer);
   sendHitEventListener(currentPlayer, rivalPlayer);
 
   const positions = document.querySelectorAll(
@@ -110,4 +111,8 @@ function syncBoards(currentPlayer, rivalPlayer) {
       if (currentPlayer.getBoard().isHit(x, y)) position.classList.add("hit");
     }
   }
+}
+
+function getShips(currentPlayer) {
+  console.log(currentPlayer);
 }

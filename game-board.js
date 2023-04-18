@@ -1,8 +1,6 @@
 export class Ship {
   constructor(_length, _shipID) {
     this.length = _length;
-    // this.startPosition = { x: _xCoord, y: _yCoord };
-    // this.direction = _direction;
     this.shipID = _shipID;
     this.hitsTaken = 0;
     this.sunk = false;
