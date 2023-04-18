@@ -2,21 +2,21 @@ import { Player } from "../game-board.js";
 import clearPage from "./clear-page.js";
 import passScreen from "./pass-screen.js";
 import placeShips from "./place-ships.js";
-import gameBoard from "./game-board.js";
+import attackScreen from "./attack.js";
 
 export default async function startPVP() {
-  //const player1 = new Player(await requirePlayerName(1));
-  //await passScreen();
-  //const player2 = new Player(await requirePlayerName(2));
-  //const shipAmount = await requireShipAmount();
-  //await placeShips(player1, shipAmount);
-  //await passScreen();
-  //await placeShips(player2, shipAmount);
-  //await passScreen();
+  // const player1 = new Player(await requirePlayerName(1));
+  // await passScreen();
+  // const player2 = new Player(await requirePlayerName(2));
+  // const shipAmount = await requireShipAmount();
+  // await placeShips(player1, shipAmount);
+  // await passScreen();
+  // await placeShips(player2, shipAmount);
+  // await passScreen();
 
   // Simulating...
-  const player1 = new Player("Jogardor teste 1");
-  const player2 = new Player("Jogardor teste 2");
+  const player1 = new Player("Jogador teste 1");
+  const player2 = new Player("Jogador teste 2");
   player1.getBoard().placeShip(4, 2, 2, "horizontal");
   player2.getBoard().placeShip(4, 2, 2, "vertical");
 
@@ -26,9 +26,15 @@ export default async function startPVP() {
   player2.getBoard().receiveAttack(0, 0);
   player2.getBoard().receiveAttack(2, 2);
   player2.getBoard().receiveAttack(9, 9);
+  await attackScreen(player1, player2);
 
-  // Game loop
-  gameBoard(player1, player2);
+  // // Game loop
+  // do {
+  //   await attackScreen(player1, player2);
+  //   await passScreen();
+  //   await attackScreen(player2, player1);
+  //   await passScreen();
+  // } while (true);
 }
 
 function requirePlayerName(playerNumber) {
