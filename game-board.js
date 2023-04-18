@@ -19,41 +19,28 @@ export class Ship {
   isSunk() {
     return this.sunk;
   }
-
-  // getLength() {
-  //   return this.length;
-  // }
-
-  // getStartPosition() {
-  //   return this.startPosition;
-  // }
-
-  // getDirection() {
-  //   return this.direction;
-  // }
 }
 
 export class GameBoard {
   constructor() {
-    // Creates a 10x10 board ([x][y])
-    this.board = this.createBoard();
+    this.board = this.createBoard(); // Creates a 10x10 board ([x][y])
     this.shipsPlaced = 0; // This will be the ID of the placed ships
   }
 
   createBoard() {
+    /* Returns a 10x10 board where each position is an object with the ship 
+    and a boolean value for the hit */
     let board = [...Array(10)].map(() => Array(10));
 
-    for (let x = 0; x <= 9; x++) {
-      for (let y = 0; y <= 9; y++) {
-        board[x][y] = { ship: null, hit: false };
-      }
-    }
+    for (let x = 0; x <= 9; x++)
+      for (let y = 0; y <= 9; y++) board[x][y] = { ship: null, hit: false };
 
     return board;
   }
 
   placeShip(length, x, y, direction) {
-    // Verify the passed arguments
+    // Place the ship in the given coordinates in the game board
+    // Validate arguments
     if (arguments.length !== 4) {
       console.log("This method requires 4 arguments");
       return null;
@@ -100,8 +87,8 @@ export class GameBoard {
 
     const ship = new Ship(length, ++this.shipsPlaced);
 
+    // Verify if there are occupied positions, if not, place the ship
     if (direction === "horizontal") {
-      // Verify if there are occupied positions
       for (let i = x; i < x + length; i++) {
         if (this.isOccupied(i, y)) {
           console.log("One or more coordinates are occupied");
@@ -109,9 +96,7 @@ export class GameBoard {
         }
       }
 
-      for (let i = x; i < x + length; i++) {
-        this.board[i][y].ship = ship;
-      }
+      for (let i = x; i < x + length; i++) this.board[i][y].ship = ship;
     }
 
     if (direction === "vertical") {
@@ -123,17 +108,18 @@ export class GameBoard {
         }
       }
 
-      for (let i = y; i < y + length; i++) {
-        this.board[x][i].ship = ship;
-      }
+      for (let i = y; i < y + length; i++) this.board[x][i].ship = ship;
     }
   }
 
   isOccupied(x, y) {
+    /* Verify if the passed coordinates is occupied. 
+    Returns true if it is, or false if it's not occupied */
     return this.board[x][y].ship !== null ? true : false;
   }
 
   printBoard() {
+    // Print the board in the console.
     let board = "  0 1 2 3 4 5 6 7 8 9\n";
     let line = 0;
 
@@ -150,10 +136,11 @@ export class GameBoard {
     }
 
     console.log(board);
-    return board;
   }
 
   receiveAttack(x, y) {
+    /* Receive an attack on the passed coordinates.
+    Returns null if the position was already hit or if doesn't hit a ship */
     const position = this.board[x][y];
 
     if (!position.hit) position.hit = true;
@@ -187,7 +174,28 @@ export class GameBoard {
   }
 
   isHit(x, y) {
+    // Returns the hit value (true or false) of the passed coordinates
     return this.board[x][y].hit;
+  }
+
+  getShips() {
+    // Returns an array with the ships placed in this board
+    const ships = [];
+    const verifiedIDs = [];
+
+    for (let x = 0; x <= 9; x++) {
+      for (let y = 0; y <= 9; y++) {
+        if (this.isOccupied(x, y)) {
+          const currShip = this.board[x][y].ship;
+          if (!verifiedIDs.includes(currShip.getID())) {
+            ships.push(currShip);
+            verifiedIDs.push(currShip.getID());
+          }
+        }
+      }
+    }
+
+    return ships;
   }
 }
 

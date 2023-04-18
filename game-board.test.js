@@ -163,3 +163,50 @@ describe("Delete ship", () => {
     expect(testBoard.isOccupied(3, 1)).toBeTruthy();
   });
 });
+
+describe("Get ships", () => {
+  let testBoard;
+
+  beforeEach(() => {
+    testBoard = new GameBoard();
+  });
+
+  test("Get ships", () => {
+    expect(testBoard.placeShip(1, 0, 0, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(4, 6, 9, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(1, 0, 1, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(1, 0, 2, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(1, 0, 3, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(1, 0, 4, "horizontal")).not.toBeNull();
+    expect(testBoard.placeShip(1, 0, 5, "horizontal")).not.toBeNull();
+
+    expect(typeof testBoard.getShips()).toBe("object");
+
+    expect(testBoard.getShips().length).toEqual(7);
+
+    expect(
+      testBoard.getShips().find((ship) => ship.shipID === 1)
+    ).not.toBeUndefined();
+    expect(
+      testBoard.getShips().find((ship) => ship.shipID === 2)
+    ).not.toBeUndefined();
+    expect(
+      testBoard.getShips().find((ship) => ship.shipID === 3)
+    ).not.toBeUndefined();
+    expect(
+      testBoard.getShips().find((ship) => ship.shipID === 4)
+    ).not.toBeUndefined();
+    expect(
+      testBoard.getShips().find((ship) => ship.shipID === 5)
+    ).not.toBeUndefined();
+    expect(
+      testBoard.getShips().find((ship) => ship.shipID === 6)
+    ).not.toBeUndefined();
+    expect(
+      testBoard.getShips().find((ship) => ship.shipID === 7)
+    ).not.toBeUndefined();
+    expect(
+      testBoard.getShips().find((ship) => ship.shipID === 8)
+    ).toBeUndefined();
+  });
+});
