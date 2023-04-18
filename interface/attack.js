@@ -6,7 +6,6 @@ export default function attackScreen(currentPlayer, rivalPlayer) {
   popUpAttackResult();
   header(currentPlayer);
   getBoards(currentPlayer, rivalPlayer);
-  getShips(currentPlayer);
   sendHitEventListener(currentPlayer, rivalPlayer);
 
   const positions = document.querySelectorAll(
@@ -43,6 +42,7 @@ function getBoards(currentPlayer, rivalPlayer) {
   const currPlayerBoardTitle = document.createElement("div");
   currPlayerBoardTitle.textContent = "Suas embarcações";
   currPlayerBoard.appendChild(currPlayerBoardTitle);
+  currPlayerBoard.appendChild(getPlayerShips(currentPlayer));
   currPlayerBoard.appendChild(renderBoard());
   currPlayerBoard.classList.add("current-player");
   document.body.appendChild(currPlayerBoard);
@@ -51,11 +51,47 @@ function getBoards(currentPlayer, rivalPlayer) {
   const rivalBoardTitle = document.createElement("div");
   rivalBoardTitle.textContent = `Embarcações de ${rivalPlayer.getName()}`;
   rivalBoard.appendChild(rivalBoardTitle);
+  rivalBoard.appendChild(getPlayerShips(rivalPlayer));
   rivalBoard.appendChild(renderBoard());
   rivalBoard.classList.add("rival-player");
   document.body.appendChild(rivalBoard);
 
   syncBoards(currentPlayer, rivalPlayer);
+
+  function getPlayerShips(currentPlayer) {
+    const ships = currentPlayer.getBoard().getShips();
+
+    const shipsDiv = document.createElement("div");
+
+    for (let ship of ships) {
+      const shipDiv = document.createElement("div");
+
+      let shipName;
+      switch (ship.length) {
+        case 1:
+          shipName = "Destróier";
+          break;
+        case 2:
+          shipName = "Submarino";
+          break;
+        case 3:
+          shipName = "Cruzador";
+          break;
+        case 4:
+          shipName = "Couraçado";
+          break;
+        case 5:
+          shipName = "Porta-aviões";
+          break;
+      }
+
+      shipDiv.textContent = `${shipName}: ${ship.sunk ? "Destruído" : "Ativo"}`;
+
+      shipsDiv.appendChild(shipDiv);
+    }
+
+    return shipsDiv;
+  }
 }
 
 function sendHitEventListener(currentPlayer, rivalPlayer) {
@@ -111,8 +147,4 @@ function syncBoards(currentPlayer, rivalPlayer) {
       if (currentPlayer.getBoard().isHit(x, y)) position.classList.add("hit");
     }
   }
-}
-
-function getShips(currentPlayer) {
-  console.log(currentPlayer);
 }
