@@ -17,18 +17,27 @@ export default function attackScreen(currentPlayer, rivalPlayer) {
   return new Promise((resolve) => {
     positions.forEach((pos) => {
       pos.addEventListener("click", () => {
-        const currPlayerLost = currentPlayer
-          .getBoard()
-          .getShips()
-          .reduce((acc, cur) => acc && cur.sunk, true);
+        // const currPlayerLost = currentPlayer
+        //   .getBoard()
+        //   .getShips()
+        //   .reduce((acc, cur) => acc && cur.sunk, true);
 
-        const rivalPlayerLost = rivalPlayer
-          .getBoard()
-          .getShips()
-          .reduce((acc, cur) => acc && cur.sunk, true);
+        // const rivalPlayerLost = rivalPlayer
+        //   .getBoard()
+        //   .getShips()
+        //   .reduce((acc, cur) => acc && cur.sunk, true);
 
         setTimeout(() => {
-          resolve(currPlayerLost || rivalPlayerLost);
+          // resolve(currPlayerLost || rivalPlayerLost);
+          // If the enemy loses, the currentPlayer (the winner) object, if not, returns null
+          resolve(
+            rivalPlayer
+              .getBoard()
+              .getShips()
+              .reduce((acc, cur) => acc && cur.sunk, true)
+              ? currentPlayer
+              : null
+          );
         }, 3000);
       });
     });

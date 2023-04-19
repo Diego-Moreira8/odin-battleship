@@ -3,47 +3,38 @@ import clearPage from "./clear-page.js";
 import passScreen from "./pass-screen.js";
 import placeShips from "./place-ships.js";
 import attackScreen from "./attack.js";
+import resultsScreen from "./results.js";
 
 export default async function startPVP() {
-  const player1 = new Player(await requirePlayerName(1));
-  await passScreen();
-  const player2 = new Player(await requirePlayerName(2));
-  const shipAmount = await requireShipAmount();
-  await placeShips(player1, shipAmount);
-  await passScreen();
-  await placeShips(player2, shipAmount);
-  await passScreen();
+  // const player1 = new Player(await requirePlayerName(1));
+  // await passScreen();
+  // const player2 = new Player(await requirePlayerName(2));
+  // const shipAmount = await requireShipAmount();
+  // await placeShips(player1, shipAmount);
+  // await passScreen();
+  // await placeShips(player2, shipAmount);
+  // await passScreen();
 
-  // // Simulating...
-  // const player1 = new Player("Jogador teste 1");
-  // const player2 = new Player("Jogador teste 2");
-  // player1.getBoard().placeShip(4, 2, 2, "horizontal");
-  // player2.getBoard().placeShip(5, 2, 2, "vertical");
-
-  // player1.getBoard().receiveAttack(2, 2);
-  // player1.getBoard().receiveAttack(3, 2);
-  // player1.getBoard().receiveAttack(4, 2);
-  // //player1.getBoard().receiveAttack(5, 2);
-
-  // player2.getBoard().receiveAttack(2, 2);
-  // player2.getBoard().receiveAttack(2, 3);
-  // player2.getBoard().receiveAttack(2, 4);
-  // player2.getBoard().receiveAttack(2, 5);
+  // Simulating...
+  const player1 = new Player("Jogador teste 1");
+  const player2 = new Player("Jogador teste 2");
+  player1.getBoard().placeShip(1, 0, 0, "horizontal");
+  player2.getBoard().placeShip(1, 0, 0, "horizontal");
 
   // Game loop
-  let playerLost;
+  let winnerPlayer;
   do {
     // Player 1 turn...
-    playerLost = await attackScreen(player1, player2);
-    if (playerLost) continue;
+    winnerPlayer = await attackScreen(player1, player2);
+    if (winnerPlayer) continue;
     await passScreen();
     // Player 2 turn...
-    playerLost = await attackScreen(player2, player1);
-    if (playerLost) continue;
+    winnerPlayer = await attackScreen(player2, player1);
+    if (winnerPlayer) continue;
     await passScreen();
-  } while (playerLost);
+  } while (!winnerPlayer);
 
-  console.log("GAME OVER");
+  await resultsScreen(winnerPlayer);
 }
 
 function requirePlayerName(playerNumber) {
