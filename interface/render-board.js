@@ -1,10 +1,11 @@
-export default function renderBoard() {
-  // Returns a rendered board
-  // Use Node.appendChild(renderBoard())
-  /* In the CSS, must have at least a height for the .board, and border
-  color for the .board-position to be visible.
-  * {box-sizing: border-box;} is required too */
+/* 
+* Creates and returns a board element.
+* To insert, use, Node.appendChild(renderBoard()).
+* For the board be visible, the CSS, must have at least a height for the .board
+  and a border color for the .board-position.
+* {box-sizing: border-box;} is required too. */
 
+export default function renderBoard() {
   const boardDiv = document.createElement("div");
   boardDiv.setAttribute("class", "board");
   boardDiv.style.display = "grid";

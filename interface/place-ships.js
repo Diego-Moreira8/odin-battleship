@@ -1,13 +1,22 @@
-import clearPage from "./clear-page.js";
+/* 
+* Render a screen with buttons with the available ships, a button to delete a 
+  ship, a button to rotate the ship and an empty board.
+
+* Ships can be placed by clicking on a empty position. If the placing is valid,
+  a instance of Ship object is created and placed on the player game-board.
+
+* The positions on the board have a hover event listener, that add a class to 
+  highlight valid and invalid placing positions.
+*/
+
 import renderBoard from "./render-board.js";
 
 export default function placeShips(player, passedShipAmount) {
-  // Clone shipAmount so this function doesn't make changes on the passed object
+  // Clone shipAmount object so this module doesn't change the original
   let shipAmount = structuredClone(passedShipAmount);
 
-  clearPage();
+  document.body.innerHTML = "";
 
-  // Page Title
   const title = document.createElement("h2");
   title.textContent = `${player.getName()}, posicione suas embarcações!`;
   document.body.appendChild(title);
@@ -17,7 +26,6 @@ export default function placeShips(player, passedShipAmount) {
   hoverEffect();
   clickPositionAction(player, shipAmount);
 
-  // This function will return when doneBtn is clicked
   const doneBtn = doneButton();
   return new Promise((resolve) => {
     doneBtn.addEventListener("click", () => {
@@ -27,6 +35,7 @@ export default function placeShips(player, passedShipAmount) {
 }
 
 function renderOptionsDiv(shipAmount) {
+  // Render a div with buttons to manage ship placing
   const controlsDiv = document.createElement("div");
 
   // Delete button
@@ -140,6 +149,7 @@ function hoverEffect() {
 
       // Creates an array with the positions to be hovered
       const toBeHovered = [];
+      // Class that will be added on the placing positions
       let hoverClass = "place-hover";
 
       // Search for invalid positions and populates toBeHovered
@@ -149,7 +159,8 @@ function hoverEffect() {
             `[x-coord='${x + i}'][y-coord='${y}']`
           );
 
-          // If the ship cross the edge or finds an occupied position
+          /* If the ship cross the edge or finds an occupied position, change
+          the class to invalid */
           if (
             (position !== null &&
               currShipLength > 1 &&
@@ -187,6 +198,10 @@ function hoverEffect() {
 }
 
 function clickPositionAction(player, shipAmount) {
+  /* Click event listener for the positions. If delete button is active, delete
+  the ship that occupies the clicked position, if not, tries to place the active
+  ship */
+
   const positions = document.querySelectorAll(".board-position");
   positions.forEach((position) => {
     position.addEventListener("click", () => {
@@ -194,7 +209,7 @@ function clickPositionAction(player, shipAmount) {
       const x = parseInt(position.getAttribute("x-coord"));
       const y = parseInt(position.getAttribute("y-coord"));
 
-      // Delete ship
+      // If delete ship is active
       const deleteShipBtn = document.querySelector("#delete-ship");
       if (deleteShipBtn.classList.contains("active")) {
         const recoveredShip = player.getBoard().deleteShip(x, y);
@@ -212,7 +227,8 @@ function clickPositionAction(player, shipAmount) {
       }
 
       if (isOutOfShips()) return;
-      // Place ship
+
+      // Try to place the active ship
       const direction = document
         .querySelector("#direction")
         .getAttribute("data-current-direction");

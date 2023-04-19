@@ -9,11 +9,10 @@
 */
 
 import renderBoard from "./render-board.js";
-import clearPage from "./clear-page.js";
 
 export default function attackScreen(currentPlayer, enemyPlayer) {
   // Render screen
-  clearPage();
+  document.body.innerHTML = "";
   popUpAttackResult();
   header(currentPlayer);
   getBoards(currentPlayer, enemyPlayer);

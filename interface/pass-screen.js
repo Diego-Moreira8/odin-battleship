@@ -1,11 +1,10 @@
-import clearPage from "./clear-page.js";
+// Render a pass device screen and returns when done button is clicked
 
 export default function passScreen() {
-  // Render a pass screen and return a promise of the pressed done button
-  clearPage();
+  document.body.innerHTML = "";
 
   const msg = document.createElement("div");
-  msg.textContent = "Passe o dispositivo para o(a) rival...";
+  msg.textContent = "Passe o dispositivo para o(a) inimigo(a)...";
   document.body.appendChild(msg);
 
   const doneBtn = document.createElement("button");

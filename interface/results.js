@@ -1,7 +1,8 @@
-import clearPage from "./clear-page.js";
+/* Render a results screen with the name of the winner and a button for return 
+to the main menu */
 
 export default function resultsScreen(winnerPlayer) {
-  clearPage();
+  document.body.innerHTML = "";
 
   const title = document.createElement("div");
   title.textContent = "Fim de jogo!";

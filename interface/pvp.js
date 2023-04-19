@@ -1,5 +1,8 @@
+/* Starts a Player vs Player match. Asks for the players names, and the amount
+of each of the ships that will be used in the game. The total of ships must be 
+between 1 and 10. Then starts the game loop. */
+
 import { Player } from "../game-board.js";
-import clearPage from "./clear-page.js";
 import passScreen from "./pass-screen.js";
 import placeShips from "./place-ships.js";
 import attackScreen from "./attack.js";
@@ -10,13 +13,15 @@ export default async function startPVP() {
   const player1 = new Player(await requirePlayerName(1));
   await passScreen();
   const player2 = new Player(await requirePlayerName(2));
+
   const shipAmount = await requireShipAmount();
+
   await placeShips(player1, shipAmount);
   await passScreen();
   await placeShips(player2, shipAmount);
   await passScreen();
 
-  // Game loop
+  // Game loop. Loops until one of the players is out of ships
   let winnerPlayer;
   do {
     // Player 1 turn...
@@ -35,15 +40,15 @@ export default async function startPVP() {
 }
 
 function requirePlayerName(playerNumber) {
-  // Render the form, and returns a promise of the name input
-  clearPage();
+  // Render the form, and returns the name when submitted
+  document.body.innerHTML = "";
 
   const form = document.createElement("form");
 
-  const label = document.createElement("label");
-  label.setAttribute("for", "name");
-  label.textContent = `Jogador ${playerNumber}, digite seu nome`;
-  form.appendChild(label);
+  const nameLabel = document.createElement("nameLabel");
+  nameLabel.setAttribute("for", "name");
+  nameLabel.textContent = `Jogador ${playerNumber}, digite seu nome`;
+  form.appendChild(nameLabel);
 
   const nameInput = document.createElement("input");
   nameInput.setAttribute("type", "text");
@@ -68,7 +73,8 @@ function requirePlayerName(playerNumber) {
 function requireShipAmount() {
   /* Require players the ship amount that will be used in the game 
   and return a object with the chosen ship config */
-  clearPage();
+
+  document.body.innerHTML = "";
 
   const title = document.createElement("h2");
   title.textContent = "Escolham a quantidade de navios";
@@ -78,13 +84,13 @@ function requireShipAmount() {
   description.textContent = "Até 10 navios, de qualquer tipo";
   document.body.appendChild(description);
 
-  // Create 5 divs with the ships
+  // Create 5 divs with the ships ("i" is the ship length)
   for (let i = 0; i < 5; i++) {
     const shipDiv = document.createElement("div");
     shipDiv.setAttribute("class", "ship-amount-group");
 
     const shipName = document.createElement("div");
-    // Switch the ship name
+    // Switch the ship name based on the length
     switch (i) {
       case 0:
         shipName.textContent = "Porta-aviões (tamanho 5)";

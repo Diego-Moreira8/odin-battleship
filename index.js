@@ -1,10 +1,11 @@
+/* Render the main menu, with buttons that start the selected game mode */
+
 import startPVP from "./interface/pvp.js";
-import clearPage from "./interface/clear-page.js";
 
 init();
 
 export default function init() {
-  clearPage();
+  document.body.innerHTML = "";
   renderMainMenu();
 }
 
