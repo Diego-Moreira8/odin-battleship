@@ -12,12 +12,23 @@ export default function attackScreen(currentPlayer, rivalPlayer) {
     ".rival-player .board .board-position:not(.hit):not(.water)"
   );
 
-  // Exit in 3 seconds after click on a valid position
+  // When attack, evaluates if one of the players still have ships
+  // If one of them is out of ships, returns true. If not, returns false
   return new Promise((resolve) => {
     positions.forEach((pos) => {
       pos.addEventListener("click", () => {
+        const currPlayerLost = currentPlayer
+          .getBoard()
+          .getShips()
+          .reduce((acc, cur) => acc && cur.sunk, true);
+
+        const rivalPlayerLost = rivalPlayer
+          .getBoard()
+          .getShips()
+          .reduce((acc, cur) => acc && cur.sunk, true);
+
         setTimeout(() => {
-          resolve();
+          resolve(currPlayerLost || rivalPlayerLost);
         }, 3000);
       });
     });
