@@ -4,22 +4,17 @@ import passScreen from "./pass-screen.js";
 import placeShips from "./place-ships.js";
 import attackScreen from "./attack.js";
 import resultsScreen from "./results.js";
+import init from "../index.js";
 
 export default async function startPVP() {
-  // const player1 = new Player(await requirePlayerName(1));
-  // await passScreen();
-  // const player2 = new Player(await requirePlayerName(2));
-  // const shipAmount = await requireShipAmount();
-  // await placeShips(player1, shipAmount);
-  // await passScreen();
-  // await placeShips(player2, shipAmount);
-  // await passScreen();
-
-  // Simulating...
-  const player1 = new Player("Jogador teste 1");
-  const player2 = new Player("Jogador teste 2");
-  player1.getBoard().placeShip(1, 0, 0, "horizontal");
-  player2.getBoard().placeShip(1, 0, 0, "horizontal");
+  const player1 = new Player(await requirePlayerName(1));
+  await passScreen();
+  const player2 = new Player(await requirePlayerName(2));
+  const shipAmount = await requireShipAmount();
+  await placeShips(player1, shipAmount);
+  await passScreen();
+  await placeShips(player2, shipAmount);
+  await passScreen();
 
   // Game loop
   let winnerPlayer;
@@ -35,6 +30,8 @@ export default async function startPVP() {
   } while (!winnerPlayer);
 
   await resultsScreen(winnerPlayer);
+
+  init();
 }
 
 function requirePlayerName(playerNumber) {

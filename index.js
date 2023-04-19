@@ -1,9 +1,12 @@
 import startPVP from "./interface/pvp.js";
+import clearPage from "./interface/clear-page.js";
 
-(function init() {
-  //renderMainMenu();
-  startPVP();
-})();
+init();
+
+export default function init() {
+  clearPage();
+  renderMainMenu();
+}
 
 function renderMainMenu() {
   // Render the main menu and add the triggers for the buttons
