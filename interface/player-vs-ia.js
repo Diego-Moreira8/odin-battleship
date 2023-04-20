@@ -10,6 +10,7 @@ import resultsScreen from "./results.js";
 import init from "../index.js";
 import pauseMenu from "./pause-menu.js";
 import requireShipAmount from "./require-ship-amount.js";
+import CPUPlayer from "../game-classes/cpu-player.js";
 
 export default async function startPlayerVsIA() {
   document.body.innerHTML = "";
@@ -21,4 +22,41 @@ export default async function startPlayerVsIA() {
   const player = new Player();
   const shipAmount = await requireShipAmount();
   await placeShips(player, shipAmount);
+  await cpuPlacingShipsScreen(shipAmount);
+}
+
+function cpuPlacingShipsScreen(shipAmount) {
+  const content = document.querySelector("#content");
+  content.innerHTML = "";
+
+  const waitMsg = document.createElement("div");
+  waitMsg.textContent =
+    "Por favor aguarde, o computador está posicionando as embarcações...";
+
+  const startBtn = document.createElement("button");
+  startBtn.setAttribute("type", "button");
+  startBtn.disabled = true;
+  startBtn.textContent = "Começar!";
+
+  [waitMsg, startBtn].forEach((el) => content.appendChild(el));
+
+  const cpuPlayer = new CPUPlayer();
+
+  // CPU place ships...
+  for (let key in shipAmount)
+    if (shipAmount[key] > 0)
+      for (let i = 0; i < shipAmount[key]; i++)
+        // Slices the key to get the length
+        cpuPlayer.placeShip(parseInt(key.slice(-1)));
+
+  waitMsg.textContent =
+    "O computador posicionou as embarcações. Pronto para começar?";
+
+  startBtn.disabled = false;
+
+  return new Promise((resolve) => {
+    startBtn.addEventListener("click", () => {
+      resolve();
+    });
+  });
 }
