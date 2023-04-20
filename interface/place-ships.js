@@ -292,7 +292,7 @@ function isOutOfShips() {
   // Verify if out of ships
   let shipBtns = Array.from(document.querySelectorAll(".ship"));
   // If all buttons are disabled, return
-  return shipBtns.reduce((acc, cur) => acc && cur.disabled);
+  return shipBtns.reduce((acc, cur) => acc && cur.disabled, true);
 }
 
 function doneButton() {
