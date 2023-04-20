@@ -13,7 +13,7 @@ export default function resultsScreen(winnerPlayer) {
   document.body.appendChild(winner);
 
   const winnerName = document.createElement("div");
-  winnerName.textContent = `${winnerPlayer.getName()}`;
+  winnerName.textContent = `${winnerPlayer.name}`;
   document.body.appendChild(winnerName);
 
   const mainMenuBtn = document.createElement("button");

@@ -2,7 +2,7 @@
 of each of the ships that will be used in the game. The total of ships must be 
 between 1 and 10. Then starts the game loop. */
 
-import { Player } from "../game-board.js";
+import Player from "../game-classes/player.js";
 import passScreen from "./pass-screen.js";
 import placeShips from "./place-ships.js";
 import attackScreen from "./attack.js";

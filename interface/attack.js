@@ -28,8 +28,7 @@ export default function attackScreen(currentPlayer, enemyPlayer) {
       pos.addEventListener("click", () => {
         setTimeout(() => {
           resolve(
-            enemyPlayer
-              .getBoard()
+            enemyPlayer.board
               .getShips()
               .reduce((acc, cur) => acc && cur.sunk, true)
               ? currentPlayer
@@ -50,7 +49,7 @@ function popUpAttackResult() {
 
 function header(currentPlayer) {
   const headerDiv = document.createElement("div");
-  headerDiv.textContent = `Vez de ${currentPlayer.getName()}`;
+  headerDiv.textContent = `Vez de ${currentPlayer.name}`;
   document.body.appendChild(headerDiv);
 }
 
@@ -68,7 +67,7 @@ function getBoards(currentPlayer, enemyPlayer) {
   // Enemy's board
   const enemyBoard = document.createElement("div");
   const enemyBoardTitle = document.createElement("div");
-  enemyBoardTitle.textContent = `Embarcações de ${enemyPlayer.getName()}`;
+  enemyBoardTitle.textContent = `Embarcações de ${enemyPlayer.name}`;
   enemyBoard.appendChild(enemyBoardTitle);
   enemyBoard.appendChild(getPlayerShips(enemyPlayer));
   enemyBoard.appendChild(renderBoard());
@@ -79,7 +78,7 @@ function getBoards(currentPlayer, enemyPlayer) {
 
   function getPlayerShips(currentPlayer) {
     // Load the current player ships and its status
-    const ships = currentPlayer.getBoard().getShips();
+    const ships = currentPlayer.board.getShips();
 
     const shipsDiv = document.createElement("div");
 
@@ -129,7 +128,7 @@ function sendHitEventListener(currentPlayer, enemyPlayer) {
         const x = e.target.getAttribute("x-coord");
         const y = e.target.getAttribute("y-coord");
 
-        const attackResult = enemyPlayer.getBoard().receiveAttack(x, y);
+        const attackResult = enemyPlayer.board.receiveAttack(x, y);
         syncBoards(currentPlayer, enemyPlayer);
 
         // Bring the result pop up
@@ -152,12 +151,10 @@ function syncBoards(currentPlayer, enemyPlayer) {
   // Load enemy's hits
   for (let y = 0; y <= 9; y++)
     for (let x = 0; x <= 9; x++)
-      if (enemyPlayer.getBoard().isHit(x, y))
+      if (enemyPlayer.board.isHit(x, y))
         enemyBoard
           .querySelector(`[x-coord='${x}'][y-coord='${y}']`)
-          .classList.add(
-            enemyPlayer.getBoard().isOccupied(x, y) ? "hit" : "water"
-          );
+          .classList.add(enemyPlayer.board.isOccupied(x, y) ? "hit" : "water");
 
   // Load current player ships and hits
   for (let y = 0; y <= 9; y++) {
@@ -166,10 +163,10 @@ function syncBoards(currentPlayer, enemyPlayer) {
         `[x-coord='${x}'][y-coord='${y}']`
       );
 
-      if (currentPlayer.getBoard().isOccupied(x, y))
+      if (currentPlayer.board.isOccupied(x, y))
         position.classList.add("occupied");
 
-      if (currentPlayer.getBoard().isHit(x, y)) position.classList.add("hit");
+      if (currentPlayer.board.isHit(x, y)) position.classList.add("hit");
     }
   }
 }

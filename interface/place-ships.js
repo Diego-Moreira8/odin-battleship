@@ -18,7 +18,7 @@ export default function placeShips(player, passedShipAmount) {
   document.body.innerHTML = "";
 
   const title = document.createElement("h2");
-  title.textContent = `${player.getName()}, posicione suas embarcações!`;
+  title.textContent = `${player.name}, posicione suas embarcações!`;
   document.body.appendChild(title);
 
   renderOptionsDiv(shipAmount);
@@ -212,7 +212,7 @@ function clickPositionAction(player, shipAmount) {
       // If delete ship is active
       const deleteShipBtn = document.querySelector("#delete-ship");
       if (deleteShipBtn.classList.contains("active")) {
-        const recoveredShip = player.getBoard().deleteShip(x, y);
+        const recoveredShip = player.board.deleteShip(x, y);
         if (recoveredShip === null) return;
         // Finds the recovered ship in the shipAmount object and increments it
         for (let key in shipAmount)
@@ -236,7 +236,7 @@ function clickPositionAction(player, shipAmount) {
         document.querySelector(".ship.active").getAttribute("key").slice(-1)
       );
       // If succeed on placing ship
-      if (player.getBoard().placeShip(length, x, y, direction) !== null) {
+      if (player.board.placeShip(length, x, y, direction) !== null) {
         const currentShipKey = document
           .querySelector(".ship.active")
           .getAttribute("key");
@@ -258,7 +258,7 @@ function clickPositionAction(player, shipAmount) {
     // Apply the "occupied" class
     for (let y = 0; y <= 9; y++)
       for (let x = 0; x <= 9; x++)
-        if (player.getBoard().isOccupied(x, y))
+        if (player.board.isOccupied(x, y))
           document
             .querySelector(`[x-coord='${x}'][y-coord='${y}']`)
             .classList.add("occupied");
