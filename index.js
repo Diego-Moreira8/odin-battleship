@@ -1,6 +1,7 @@
 /* Render the main menu, with buttons that start the selected game mode */
 
 import startPVP from "./interface/pvp.js";
+import startPlayerVsIA from "./interface/player-vs-ia.js";
 
 init();
 
@@ -23,8 +24,9 @@ function renderMainMenu() {
   pvpBtn.addEventListener("click", startPVP);
   document.body.appendChild(pvpBtn);
 
-  const pvIaBtn = document.createElement("button");
-  pvIaBtn.setAttribute("type", "button");
-  pvIaBtn.textContent = "Jogador vs Computador";
-  document.body.appendChild(pvIaBtn);
+  const playerVsIA = document.createElement("button");
+  playerVsIA.setAttribute("type", "button");
+  playerVsIA.textContent = "Jogador vs Computador";
+  playerVsIA.addEventListener("click", startPlayerVsIA);
+  document.body.appendChild(playerVsIA);
 }

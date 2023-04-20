@@ -19,7 +19,10 @@ export default function placeShips(player, passedShipAmount) {
   content.innerHTML = "";
 
   const title = document.createElement("h2");
-  title.textContent = `${player.name}, posicione suas embarcações!`;
+  title.textContent =
+    player.name === null
+      ? "Posicione suas embarcações!"
+      : `${player.name}, posicione suas embarcações!`;
   content.appendChild(title);
 
   renderOptionsDiv(shipAmount);
