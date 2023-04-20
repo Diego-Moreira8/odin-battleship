@@ -2,23 +2,24 @@
 to the main menu */
 
 export default function resultsScreen(winnerPlayer) {
-  document.body.innerHTML = "";
+  const content = document.querySelector("#content");
+  content.innerHTML = "";
 
   const title = document.createElement("div");
   title.textContent = "Fim de jogo!";
-  document.body.appendChild(title);
+  content.appendChild(title);
 
   const winner = document.createElement("div");
   winner.textContent = "Vencedor:";
-  document.body.appendChild(winner);
+  content.appendChild(winner);
 
   const winnerName = document.createElement("div");
   winnerName.textContent = `${winnerPlayer.name}`;
-  document.body.appendChild(winnerName);
+  content.appendChild(winnerName);
 
   const mainMenuBtn = document.createElement("button");
   mainMenuBtn.textContent = "Voltar para o menu principal";
-  document.body.appendChild(mainMenuBtn);
+  content.appendChild(mainMenuBtn);
 
   return new Promise((resolve) => {
     mainMenuBtn.addEventListener("click", () => {

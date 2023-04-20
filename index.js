@@ -19,10 +19,12 @@ function renderMainMenu() {
   // Menu buttons
   const pvpBtn = document.createElement("button");
   pvpBtn.textContent = "Jogador vs Jogador";
+  pvpBtn.setAttribute("type", "button");
   pvpBtn.addEventListener("click", startPVP);
   document.body.appendChild(pvpBtn);
 
   const pvIaBtn = document.createElement("button");
+  pvIaBtn.setAttribute("type", "button");
   pvIaBtn.textContent = "Jogador vs Computador";
   document.body.appendChild(pvIaBtn);
 }

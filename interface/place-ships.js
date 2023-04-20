@@ -15,14 +15,15 @@ export default function placeShips(player, passedShipAmount) {
   // Clone shipAmount object so this module doesn't change the original
   let shipAmount = structuredClone(passedShipAmount);
 
-  document.body.innerHTML = "";
+  const content = document.querySelector("#content");
+  content.innerHTML = "";
 
   const title = document.createElement("h2");
   title.textContent = `${player.name}, posicione suas embarcações!`;
-  document.body.appendChild(title);
+  content.appendChild(title);
 
   renderOptionsDiv(shipAmount);
-  document.body.appendChild(renderBoard());
+  content.appendChild(renderBoard());
   hoverEffect();
   clickPositionAction(player, shipAmount);
 
@@ -111,7 +112,7 @@ function renderOptionsDiv(shipAmount) {
   // Adds an "active" class on the first ship button
   controlsDiv.querySelector(".ship").classList.add("active");
 
-  document.body.appendChild(controlsDiv);
+  document.querySelector("#content").appendChild(controlsDiv);
 }
 
 function hoverEffect() {
@@ -297,6 +298,6 @@ function doneButton() {
   doneBtn.setAttribute("id", "done");
   doneBtn.disabled = true;
   doneBtn.textContent = "Pronto!";
-  document.body.appendChild(doneBtn);
+  document.querySelector("#content").appendChild(doneBtn);
   return doneBtn;
 }

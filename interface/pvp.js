@@ -8,8 +8,15 @@ import placeShips from "./place-ships.js";
 import attackScreen from "./attack.js";
 import resultsScreen from "./results.js";
 import init from "../index.js";
+import pauseMenu from "./pause-menu.js";
 
 export default async function startPVP() {
+  document.body.innerHTML = "";
+  pauseMenu(); // Will be present until the game ends
+  const content = document.createElement("div");
+  content.setAttribute("id", "content");
+  document.body.appendChild(content);
+
   const player1 = new Player(await requirePlayerName(1));
   await passScreen();
   const player2 = new Player(await requirePlayerName(2));
@@ -41,7 +48,8 @@ export default async function startPVP() {
 
 function requirePlayerName(playerNumber) {
   // Render the form, and returns the name when submitted
-  document.body.innerHTML = "";
+  const content = document.querySelector("#content");
+  content.innerHTML = "";
 
   const form = document.createElement("form");
 
@@ -60,7 +68,7 @@ function requirePlayerName(playerNumber) {
   submitBtn.textContent = "Confirmar";
   form.appendChild(submitBtn);
 
-  document.body.appendChild(form);
+  content.appendChild(form);
 
   return new Promise((resolve) => {
     form.addEventListener("submit", (e) => {
@@ -74,15 +82,16 @@ function requireShipAmount() {
   /* Require players the ship amount that will be used in the game 
   and return a object with the chosen ship config */
 
-  document.body.innerHTML = "";
+  const content = document.querySelector("#content");
+  content.innerHTML = "";
 
   const title = document.createElement("h2");
   title.textContent = "Escolham a quantidade de navios";
-  document.body.appendChild(title);
+  content.appendChild(title);
 
   const description = document.createElement("div");
   description.textContent = "Até 10 navios, de qualquer tipo";
-  document.body.appendChild(description);
+  content.appendChild(description);
 
   // Create 5 divs with the ships ("i" is the ship length)
   for (let i = 0; i < 5; i++) {
@@ -128,7 +137,7 @@ function requireShipAmount() {
     shipDiv.appendChild(plusBtn);
     plusBtn.addEventListener("click", updateAmount);
 
-    document.body.appendChild(shipDiv);
+    content.appendChild(shipDiv);
 
     function updateAmount(e) {
       // Update the ship amount and the disabled status for the buttons
@@ -172,7 +181,7 @@ function requireShipAmount() {
   const confirmBtn = document.createElement("button");
   confirmBtn.disabled = true;
   confirmBtn.textContent = "Começar!";
-  document.body.appendChild(confirmBtn);
+  content.appendChild(confirmBtn);
 
   return new Promise((resolve) => {
     confirmBtn.addEventListener("click", () => {

@@ -12,7 +12,9 @@ import renderBoard from "./render-board.js";
 
 export default function attackScreen(currentPlayer, enemyPlayer) {
   // Render screen
-  document.body.innerHTML = "";
+  const content = document.querySelector("#content");
+  content.innerHTML = "";
+
   popUpAttackResult();
   header(currentPlayer);
   getBoards(currentPlayer, enemyPlayer);
@@ -44,13 +46,13 @@ function popUpAttackResult() {
   // An overlay div with the results of the attack
   const popUpDiv = document.createElement("div");
   popUpDiv.setAttribute("id", "pop-up-attack-result");
-  document.body.appendChild(popUpDiv);
+  document.querySelector("#content").appendChild(popUpDiv);
 }
 
 function header(currentPlayer) {
   const headerDiv = document.createElement("div");
   headerDiv.textContent = `Vez de ${currentPlayer.name}`;
-  document.body.appendChild(headerDiv);
+  document.querySelector("#content").appendChild(headerDiv);
 }
 
 function getBoards(currentPlayer, enemyPlayer) {
@@ -63,7 +65,7 @@ function getBoards(currentPlayer, enemyPlayer) {
   currPlayerBoard.appendChild(getPlayerShips(currentPlayer));
   currPlayerBoard.appendChild(renderBoard());
   currPlayerBoard.classList.add("current-player");
-  document.body.appendChild(currPlayerBoard);
+  document.querySelector("#content").appendChild(currPlayerBoard);
   // Enemy's board
   const enemyBoard = document.createElement("div");
   const enemyBoardTitle = document.createElement("div");
@@ -72,7 +74,7 @@ function getBoards(currentPlayer, enemyPlayer) {
   enemyBoard.appendChild(getPlayerShips(enemyPlayer));
   enemyBoard.appendChild(renderBoard());
   enemyBoard.classList.add("enemy-player");
-  document.body.appendChild(enemyBoard);
+  document.querySelector("#content").appendChild(enemyBoard);
 
   syncBoards(currentPlayer, enemyPlayer);
 

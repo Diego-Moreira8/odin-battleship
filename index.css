@@ -2,6 +2,29 @@
   box-sizing: border-box;
 }
 
+#pause-menu,
+#quit-confirm {
+  background-color: #ffffffd1;
+
+  color: #000;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#pause-menu.active,
+#quit-confirm.active {
+  display: flex;
+}
+
 .board {
   height: 200px;
   width: 200px;
