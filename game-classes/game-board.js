@@ -89,6 +89,8 @@ export default class GameBoard {
 
       for (let i = y; i < y + length; i++) this.board[x][i].ship = ship;
     }
+
+    return ship;
   }
 
   isOccupied(x, y) {
