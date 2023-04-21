@@ -22,7 +22,23 @@ export default async function startPlayerVsIA() {
   const player = new Player();
   const shipAmount = await requireShipAmount();
   await placeShips(player, shipAmount);
-  await cpuPlacingShipsScreen(shipAmount);
+  const cpu = await cpuPlacingShipsScreen(shipAmount);
+  console.log(cpu);
+
+  // Game loop. Loops until the player or the IA is out of ships
+  let winnerPlayer;
+  do {
+    // Player turn...
+    winnerPlayer = await attackScreen(player, cpu);
+    if (winnerPlayer) continue;
+    console.log(winnerPlayer);
+    // CPU turn...
+    cpu.attack(player.board);
+  } while (!winnerPlayer);
+
+  await resultsScreen(winnerPlayer);
+
+  init();
 }
 
 function cpuPlacingShipsScreen(shipAmount) {
@@ -56,7 +72,7 @@ function cpuPlacingShipsScreen(shipAmount) {
 
   return new Promise((resolve) => {
     startBtn.addEventListener("click", () => {
-      resolve();
+      resolve(cpuPlayer);
     });
   });
 }

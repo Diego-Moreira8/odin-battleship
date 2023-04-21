@@ -121,14 +121,19 @@ export default class GameBoard {
 
   receiveAttack(x, y) {
     /* Receive an attack on the passed coordinates.
-    Returns null if the position was already hit or if doesn't hit a ship */
+    Returns the attacked ship if succeed or null if the position was already
+    hit or if doesn't hit a ship */
     const position = this.board[x][y];
 
     if (!position.hit) position.hit = true;
     else return null;
 
-    if (position.ship) position.ship.hit();
-    else return null;
+    if (position.ship) {
+      position.ship.hit();
+      return position.ship;
+    } else {
+      return null;
+    }
   }
 
   deleteShip(x, y) {
