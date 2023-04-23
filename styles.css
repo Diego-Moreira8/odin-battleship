@@ -1,0 +1,273 @@
+* {
+  box-sizing: border-box;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  height: 100vh;
+  background-color: #247BA0;
+  color: #FFFCFF;
+}
+body #main-menu {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  height: 100%;
+  padding: 0 8px;
+  background-color: #247BA0;
+}
+body #main-menu h1 {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 24px;
+}
+body #main-menu button {
+  font-family: Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1C1F33;
+  padding: 16px 4px;
+  margin-bottom: 8px;
+  background-color: #FFFCFF;
+  border-radius: 16px;
+  border: none;
+}
+body button#pause {
+  position: absolute;
+  right: 0;
+  margin: 8px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  box-shadow: #1C1F33 0px 3px 6px;
+  background-color: #1C1F33;
+  color: #FFFCFF;
+  font-size: 1rem;
+  font-weight: bold;
+}
+body #pause-menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.8470588235);
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+body #pause-menu button {
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #FFFCFF;
+  margin-bottom: 8px;
+  background-color: #1C1F33;
+  border-radius: 16px;
+  border: none;
+  padding: 8px 16px;
+}
+body #quit-confirm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  pointer-events: none;
+}
+body #pause-menu.active, body #quit-confirm.active {
+  display: flex;
+  pointer-events: all;
+}
+body #content {
+  height: 100%;
+  padding: 48px 32px;
+}
+body #content form#player-name {
+  display: flex;
+  flex-flow: column;
+}
+body #content form#player-name label {
+  margin-bottom: 8px;
+}
+body #content form#player-name input {
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1.25rem;
+  margin-bottom: 16px;
+  color: #1C1F33;
+}
+body #content form#player-name input:focus {
+  border: none;
+  outline: 2px solid #1C1F33;
+}
+body #content form#player-name button {
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #FFFCFF;
+  margin-bottom: 8px;
+  background-color: #1C1F33;
+  border-radius: 16px;
+  border: none;
+  padding: 8px 16px;
+}
+body #content #pass-screen {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+body #content #pass-screen div {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+body #content #pass-screen button {
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #FFFCFF;
+  margin-bottom: 8px;
+  background-color: #1C1F33;
+  border-radius: 16px;
+  border: none;
+  padding: 8px 16px;
+}
+body #content #ship-amount {
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+body #content #ship-amount h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+body #content #ship-amount #description {
+  margin-bottom: 16px;
+}
+body #content #ship-amount .ship-amount-group {
+  margin-bottom: 8px;
+  background-color: #1C1F33;
+  width: fit-content;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  border-radius: 8px;
+}
+body #content #ship-amount .ship-amount-group div {
+  padding: 4px 16px;
+  grid-column: 1/-1;
+}
+body #content #ship-amount .ship-amount-group button {
+  height: 32px;
+  width: 48px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: 2px solid #1C1F33;
+  background-color: #1C1F33;
+  color: #FFFCFF;
+}
+body #content #ship-amount .ship-amount-group button.minus-button {
+  border-radius: 0 0 0 6px;
+  background-color: #DF2935;
+}
+body #content #ship-amount .ship-amount-group button.plus-button {
+  border-radius: 0 0 6px 0;
+  background-color: #20BF55;
+}
+body #content #ship-amount .ship-amount-group .ship-amount {
+  margin: auto;
+}
+body #content #ship-amount > button {
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #FFFCFF;
+  margin-bottom: 8px;
+  background-color: #1C1F33;
+  border-radius: 16px;
+  border: none;
+  padding: 8px 16px;
+  margin-top: 8px;
+}
+body #content #place-ships h2 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+body #content #place-ships #controls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 8px;
+}
+body #content #place-ships #controls button {
+  font-family: Arial, sans-serif;
+  font-size: 0.75rem;
+  color: #FFFCFF;
+  margin: 2px;
+  background-color: #1C1F33;
+  border-radius: 16px;
+  border: none;
+  padding: 4px;
+}
+body #content #place-ships #controls button.ship.active {
+  outline: 2px solid #20BF55;
+  font-weight: bold;
+}
+body #content #place-ships #controls #delete-ship.active {
+  background-color: #DF2935;
+  font-weight: bold;
+}
+body #content #place-ships .board {
+  width: calc(100vw - 64px);
+  height: calc(100vw - 64px);
+  margin: auto;
+  margin-bottom: 16px;
+}
+body #content #place-ships .board-position {
+  border: 1px solid #FFFCFF;
+}
+body #content #place-ships .board-position.place-hover {
+  background-color: #20BF55;
+}
+body #content #place-ships .board-position.place-hover-invalid {
+  background-color: #DF2935;
+}
+body #content #place-ships .board-position.occupied {
+  background-color: #000;
+}
+body #content #place-ships .board-position.delete-hover {
+  border: 4px solid #DF2935;
+}
+body #content #place-ships #done {
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #FFFCFF;
+  margin-bottom: 8px;
+  background-color: #1C1F33;
+  border-radius: 16px;
+  border: none;
+  padding: 8px 16px;
+  width: 100%;
+}
+
+/*# sourceMappingURL=styles.css.map */

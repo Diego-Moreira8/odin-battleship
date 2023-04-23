@@ -53,8 +53,9 @@ function requirePlayerName(playerNumber) {
   content.innerHTML = "";
 
   const form = document.createElement("form");
+  form.setAttribute("id", "player-name");
 
-  const nameLabel = document.createElement("nameLabel");
+  const nameLabel = document.createElement("label");
   nameLabel.setAttribute("for", "name");
   nameLabel.textContent = `Jogador ${playerNumber}, digite seu nome`;
   form.appendChild(nameLabel);

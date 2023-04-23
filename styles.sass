@@ -1,0 +1,256 @@
+$fonts: Arial, sans-serif
+
+$font-color: #333
+$black: #000
+$dark-blue: #1C1F33
+$light-blue: #247BA0
+$white: #FFFCFF
+$green: #20BF55
+$red: #DF2935
+
+@mixin pop-up()
+  position: fixed
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+@mixin default-button()
+  font-family: $fonts
+  font-size: 1rem
+  font-weight: bold
+  color: $white
+  margin-bottom: 8px
+  background-color: $dark-blue
+  border-radius: 16px
+  border: none
+  padding: 8px 16px
+  
+
+*
+  box-sizing: border-box
+
+button:disabled
+  opacity: 0.5
+
+body 
+  font-family: $fonts
+  box-sizing: border-box
+  height: 100vh
+  background-color: $light-blue
+  color: $white
+
+  #main-menu
+    display: flex
+    flex-flow: column
+    justify-content: center
+    height: 100%
+    padding: 0 8px
+    background-color: $light-blue
+
+    h1
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+      font-size: 3rem
+      text-align: center
+      margin-bottom: 24px
+      
+
+    button
+      font-family: $fonts
+      font-size: 1.5rem
+      font-weight: bold
+      color: $dark-blue
+      padding: 16px 4px
+      margin-bottom: 8px
+      background-color: $white
+      border-radius: 16px
+      border: none
+
+  button#pause
+    position: absolute
+    right: 0
+    margin: 8px
+    width: 32px
+    height: 32px
+    border: none
+    border-radius: 50%
+    box-shadow: $dark-blue 0px 3px 6px
+    background-color: $dark-blue
+    color: $white
+    font-size: 1rem
+    font-weight: bold
+
+  #pause-menu
+    @include pop-up    
+    color: #000
+    background-color: #ffffffd8
+    width: 100%
+    height: 100%
+    display: none
+    flex-flow: column
+    align-items: center
+    justify-content: center
+    pointer-events: none
+
+    button
+      @include default-button
+      
+  #quit-confirm
+    @include pop-up
+    display: none
+    pointer-events: none
+        
+  #pause-menu.active, #quit-confirm.active
+    display: flex
+    pointer-events: all
+  
+  #content
+    height: 100%
+    padding: 48px 32px
+
+    form#player-name
+      display: flex
+      flex-flow: column
+
+      label
+        margin-bottom: 8px
+
+      input
+        font-weight: bold
+        padding: 8px 16px
+        border-radius: 8px
+        border: none
+        font-size: 1.25rem
+        margin-bottom: 16px
+        color: $dark-blue
+
+      input:focus
+        border: none
+        outline: 2px solid $dark-blue
+
+      button
+        @include default-button
+
+    #pass-screen
+      height: 100%
+      display: flex
+      flex-flow: column
+      justify-content: center
+      align-items: center
+
+      div
+        text-align: center
+        font-size: 1.5rem
+        font-weight: bold
+        margin-bottom: 16px
+        line-height: 1.25
+      
+      button
+        @include default-button
+
+    #ship-amount
+      text-align: center
+      display: flex
+      flex-flow: column
+      align-items: center
+      
+      h2
+        font-size: 1.5rem
+        font-weight: bold
+        margin-bottom: 8px
+
+      #description
+        margin-bottom: 16px
+
+      .ship-amount-group
+        margin-bottom: 8px
+        background-color: $dark-blue
+        width: fit-content
+        display: grid
+        grid-template-columns: max-content 1fr max-content
+        border-radius: 8px
+
+        div
+          padding: 4px 16px
+          grid-column: 1 / -1
+
+        button
+          height: 32px
+          width: 48px
+          font-size: 1rem
+          font-weight: bold
+          border: 2px solid $dark-blue
+          background-color: $dark-blue
+          color: $white
+
+        button.minus-button
+          border-radius: 0 0 0 6px
+          background-color: $red
+
+        button.plus-button
+          border-radius: 0 0 6px 0
+          background-color: $green
+
+        .ship-amount
+          margin: auto
+
+    #ship-amount > button
+      @include default-button
+      margin-top: 8px
+
+    #place-ships
+
+      h2
+        font-size: 1.5rem
+        margin-bottom: 8px
+        font-weight: bold
+
+      
+      #controls
+        display: grid
+        grid-template-columns: repeat(2, 1fr)
+        margin-bottom: 8px
+
+        button
+          font-family: $fonts
+          font-size: 0.75rem
+          color: $white
+          margin: 2px
+          background-color: $dark-blue
+          border-radius: 16px
+          border: none
+          padding: 4px
+
+        button.ship.active
+          outline: 2px solid $green
+          font-weight: bold
+
+        #delete-ship.active
+          background-color: $red
+          font-weight: bold
+
+      .board
+        width: calc( 100vw - 64px )
+        height: calc( 100vw - 64px )
+        margin: auto
+        margin-bottom: 16px
+
+      .board-position
+        border: 1px solid $white
+      
+      .board-position.place-hover
+        background-color: $green
+      
+      .board-position.place-hover-invalid
+        background-color: $red
+      
+      .board-position.occupied
+        background-color: $black
+      
+      .board-position.delete-hover
+        border: 4px solid $red
+
+      #done 
+        @include default-button
+        width: 100%
+
+// ...

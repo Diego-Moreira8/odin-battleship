@@ -18,15 +18,19 @@ export default function placeShips(player, passedShipAmount) {
   const content = document.querySelector("#content");
   content.innerHTML = "";
 
+  const placeShips = document.createElement("div");
+  placeShips.setAttribute("id", "place-ships");
+  content.appendChild(placeShips);
+
   const title = document.createElement("h2");
   title.textContent =
     player.name === null
       ? "Posicione suas embarcações!"
       : `${player.name}, posicione suas embarcações!`;
-  content.appendChild(title);
+  placeShips.appendChild(title);
 
   renderOptionsDiv(shipAmount);
-  content.appendChild(renderBoard());
+  placeShips.appendChild(renderBoard());
   hoverEffect();
   clickPositionAction(player, shipAmount);
 
@@ -41,6 +45,7 @@ export default function placeShips(player, passedShipAmount) {
 function renderOptionsDiv(shipAmount) {
   // Render a div with buttons to manage ship placing
   const controlsDiv = document.createElement("div");
+  controlsDiv.setAttribute("id", "controls");
 
   // Delete button
   const deleteShipBtn = document.createElement("button");
@@ -115,7 +120,7 @@ function renderOptionsDiv(shipAmount) {
   // Adds an "active" class on the first ship button
   controlsDiv.querySelector(".ship").classList.add("active");
 
-  document.querySelector("#content").appendChild(controlsDiv);
+  document.querySelector("#place-ships").appendChild(controlsDiv);
 }
 
 function hoverEffect() {
@@ -301,6 +306,6 @@ function doneButton() {
   doneBtn.setAttribute("id", "done");
   doneBtn.disabled = true;
   doneBtn.textContent = "Pronto!";
-  document.querySelector("#content").appendChild(doneBtn);
+  document.querySelector("#place-ships").appendChild(doneBtn);
   return doneBtn;
 }

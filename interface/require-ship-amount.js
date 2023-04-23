@@ -5,13 +5,17 @@ export default function requireShipAmount() {
   const content = document.querySelector("#content");
   content.innerHTML = "";
 
+  const shipAmountDiv = document.createElement("div");
+  shipAmountDiv.setAttribute("id", "ship-amount");
+
   const title = document.createElement("h2");
   title.textContent = "Escolha a quantidade de navios";
-  content.appendChild(title);
+  shipAmountDiv.appendChild(title);
 
   const description = document.createElement("div");
   description.textContent = "Até 10 navios, de qualquer tipo";
-  content.appendChild(description);
+  description.setAttribute("id", "description");
+  shipAmountDiv.appendChild(description);
 
   // Create 5 divs with the ships ("i" is the ship length)
   for (let i = 0; i < 5; i++) {
@@ -57,7 +61,7 @@ export default function requireShipAmount() {
     shipDiv.appendChild(plusBtn);
     plusBtn.addEventListener("click", updateAmount);
 
-    content.appendChild(shipDiv);
+    shipAmountDiv.appendChild(shipDiv);
 
     function updateAmount(e) {
       // Update the ship amount and the disabled status for the buttons
@@ -101,7 +105,9 @@ export default function requireShipAmount() {
   const confirmBtn = document.createElement("button");
   confirmBtn.disabled = true;
   confirmBtn.textContent = "Começar!";
-  content.appendChild(confirmBtn);
+  shipAmountDiv.appendChild(confirmBtn);
+
+  content.appendChild(shipAmountDiv);
 
   return new Promise((resolve) => {
     confirmBtn.addEventListener("click", () => {
