@@ -7,6 +7,7 @@ $light-blue: #247BA0
 $white: #FFFCFF
 $green: #20BF55
 $red: #DF2935
+$water: #214251
 
 @mixin pop-up()
   position: fixed
@@ -29,6 +30,21 @@ $red: #DF2935
 *
   box-sizing: border-box
 
+h1
+  font-size: 2rem
+  text-align: center
+  font-weight: bold
+  margin-bottom: 16px
+
+h2
+  font-size: 1.5rem
+  text-align: center
+  font-weight: bold
+  margin-bottom: 8px
+
+p
+  margin-bottom: 4px
+
 button:disabled
   opacity: 0.5
 
@@ -48,11 +64,7 @@ body
     background-color: $light-blue
 
     h1
-      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
-      font-size: 3rem
-      text-align: center
-      margin-bottom: 24px
-      
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif      
 
     button
       font-family: $fonts
@@ -152,11 +164,6 @@ body
       display: flex
       flex-flow: column
       align-items: center
-      
-      h2
-        font-size: 1.5rem
-        font-weight: bold
-        margin-bottom: 8px
 
       #description
         margin-bottom: 16px
@@ -198,12 +205,6 @@ body
       margin-top: 8px
 
     #place-ships
-
-      h2
-        font-size: 1.5rem
-        margin-bottom: 8px
-        font-weight: bold
-
       
       #controls
         display: grid
@@ -253,4 +254,62 @@ body
         @include default-button
         width: 100%
 
-// ...
+    #attack-screen
+
+      .active-ships
+        margin-bottom: 8px
+        display: grid
+        grid-template-columns: repeat(2, 1fr)
+      
+      #current-player-info
+
+        .board
+          width: calc( 100vw - 200px )
+          height: calc( 100vw - 200px )
+          margin: auto
+          margin-bottom: 16px
+
+          .board-position
+            border: 1px solid $white
+            
+          .board-position.occupied
+            background-color: $black
+  
+          .board-position.hit
+            background-color: $red
+  
+          .board-position.hit.occupied
+            background-color: $red
+      
+      #enemy-player-info
+
+        .board
+          width: calc( 100vw - 100px )
+          height: calc( 100vw - 100px )
+          margin: auto
+          margin-bottom: 16px
+
+          .board-position
+            border: 1px solid $white
+  
+          .board-position.water
+            background-color: $water
+  
+          .board-position.hit
+            background-color: $red
+
+      #pop-up-attack-result
+        @include pop-up
+        display: none
+        color: $black
+        text-align: center
+        font-size: 1.25rem
+        font-weight: bold
+        background-color: $white
+        width: calc(100% - 48px)
+        padding: 16px
+        border-radius: 16px
+        box-shadow: #0000005c 0 0 12px
+
+      #pop-up-attack-result.active
+        display: block

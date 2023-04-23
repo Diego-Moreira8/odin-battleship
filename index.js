@@ -3,7 +3,8 @@
 import startPVP from "./interface/pvp.js";
 import startPlayerVsIA from "./interface/player-vs-ia.js";
 
-init();
+startPVP();
+//init();
 
 export default function init() {
   document.body.innerHTML = "";

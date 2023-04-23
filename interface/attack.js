@@ -15,13 +15,17 @@ export default function attackScreen(currentPlayer, enemyPlayer) {
   const content = document.querySelector("#content");
   content.innerHTML = "";
 
+  const attackScreenDiv = document.createElement("div");
+  attackScreenDiv.setAttribute("id", "attack-screen");
+  content.appendChild(attackScreenDiv);
+
   popUpAttackResult();
   header(currentPlayer);
   getBoards(currentPlayer, enemyPlayer);
   sendHitEventListener(currentPlayer, enemyPlayer);
 
   const positions = document.querySelectorAll(
-    ".enemy-player .board .board-position:not(.hit):not(.water)"
+    "#enemy-player-info .board .board-position:not(.hit):not(.water)"
   );
 
   // Enemy ships evaluation
@@ -46,35 +50,35 @@ function popUpAttackResult() {
   // An overlay div with the results of the attack
   const popUpDiv = document.createElement("div");
   popUpDiv.setAttribute("id", "pop-up-attack-result");
-  document.querySelector("#content").appendChild(popUpDiv);
+  document.querySelector("#attack-screen").appendChild(popUpDiv);
 }
 
 function header(currentPlayer) {
-  const headerDiv = document.createElement("div");
+  const headerDiv = document.createElement("h2");
   headerDiv.textContent = `Vez de ${currentPlayer.name}`;
-  document.querySelector("#content").appendChild(headerDiv);
+  document.querySelector("#attack-screen").appendChild(headerDiv);
 }
 
 function getBoards(currentPlayer, enemyPlayer) {
   // Set and render the players boards
   // Current player board
   const currPlayerBoard = document.createElement("div");
-  const currPlayerBoardTitle = document.createElement("div");
+  const currPlayerBoardTitle = document.createElement("p");
   currPlayerBoardTitle.textContent = "Suas embarcações";
   currPlayerBoard.appendChild(currPlayerBoardTitle);
   currPlayerBoard.appendChild(getPlayerShips(currentPlayer));
   currPlayerBoard.appendChild(renderBoard());
-  currPlayerBoard.classList.add("current-player");
-  document.querySelector("#content").appendChild(currPlayerBoard);
+  currPlayerBoard.id = "current-player-info";
+  document.querySelector("#attack-screen").appendChild(currPlayerBoard);
   // Enemy's board
   const enemyBoard = document.createElement("div");
-  const enemyBoardTitle = document.createElement("div");
+  const enemyBoardTitle = document.createElement("p");
   enemyBoardTitle.textContent = `Embarcações de ${enemyPlayer.name}`;
   enemyBoard.appendChild(enemyBoardTitle);
   enemyBoard.appendChild(getPlayerShips(enemyPlayer));
   enemyBoard.appendChild(renderBoard());
-  enemyBoard.classList.add("enemy-player");
-  document.querySelector("#content").appendChild(enemyBoard);
+  enemyBoard.id = "enemy-player-info";
+  document.querySelector("#attack-screen").appendChild(enemyBoard);
 
   syncBoards(currentPlayer, enemyPlayer);
 
@@ -83,6 +87,7 @@ function getBoards(currentPlayer, enemyPlayer) {
     const ships = currentPlayer.board.getShips();
 
     const shipsDiv = document.createElement("div");
+    shipsDiv.classList.add("active-ships");
 
     // Creates a div for each ship
     for (let ship of ships) {
@@ -123,7 +128,7 @@ function sendHitEventListener(currentPlayer, enemyPlayer) {
 
   document
     .querySelectorAll(
-      ".enemy-player .board .board-position:not(.hit):not(.water)"
+      "#enemy-player-info .board .board-position:not(.hit):not(.water)"
     )
     .forEach((pos) => {
       pos.addEventListener("click", (e) => {
@@ -139,7 +144,7 @@ function sendHitEventListener(currentPlayer, enemyPlayer) {
           attackResult === null
             ? "Acertou a água..."
             : "Acertou uma embarcação!";
-        popUpResult.style.display = "flex";
+        popUpResult.classList.add("active");
       });
     });
 }
@@ -147,8 +152,8 @@ function sendHitEventListener(currentPlayer, enemyPlayer) {
 function syncBoards(currentPlayer, enemyPlayer) {
   // Add classes with the status on the positions of the boards
 
-  const enemyBoard = document.querySelector(".enemy-player .board");
-  const currPlayerBoard = document.querySelector(".current-player .board");
+  const enemyBoard = document.querySelector("#enemy-player-info .board");
+  const currPlayerBoard = document.querySelector("#current-player-info .board");
 
   // Load enemy's hits
   for (let y = 0; y <= 9; y++)

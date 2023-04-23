@@ -8,6 +8,7 @@ import init from "../index.js";
 
 export default function pauseMenu() {
   const pauseBtn = document.createElement("button");
+  pauseBtn.setAttribute("type", "button");
   pauseBtn.setAttribute("id", "pause");
   pauseBtn.textContent = "||";
   pauseBtn.addEventListener("click", () => menuDiv.classList.add("active"));

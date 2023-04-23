@@ -2,6 +2,24 @@
   box-sizing: border-box;
 }
 
+h1 {
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+p {
+  margin-bottom: 4px;
+}
+
 button:disabled {
   opacity: 0.5;
 }
@@ -23,9 +41,6 @@ body #main-menu {
 }
 body #main-menu h1 {
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  font-size: 3rem;
-  text-align: center;
-  margin-bottom: 24px;
 }
 body #main-menu button {
   font-family: Arial, sans-serif;
@@ -156,11 +171,6 @@ body #content #ship-amount {
   flex-flow: column;
   align-items: center;
 }
-body #content #ship-amount h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
 body #content #ship-amount #description {
   margin-bottom: 16px;
 }
@@ -207,11 +217,6 @@ body #content #ship-amount > button {
   border: none;
   padding: 8px 16px;
   margin-top: 8px;
-}
-body #content #place-ships h2 {
-  font-size: 1.5rem;
-  margin-bottom: 8px;
-  font-weight: bold;
 }
 body #content #place-ships #controls {
   display: grid;
@@ -268,6 +273,63 @@ body #content #place-ships #done {
   border: none;
   padding: 8px 16px;
   width: 100%;
+}
+body #content #attack-screen .active-ships {
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+body #content #attack-screen #current-player-info .board {
+  width: calc(100vw - 200px);
+  height: calc(100vw - 200px);
+  margin: auto;
+  margin-bottom: 16px;
+}
+body #content #attack-screen #current-player-info .board .board-position {
+  border: 1px solid #FFFCFF;
+}
+body #content #attack-screen #current-player-info .board .board-position.occupied {
+  background-color: #000;
+}
+body #content #attack-screen #current-player-info .board .board-position.hit {
+  background-color: #DF2935;
+}
+body #content #attack-screen #current-player-info .board .board-position.hit.occupied {
+  background-color: #DF2935;
+}
+body #content #attack-screen #enemy-player-info .board {
+  width: calc(100vw - 100px);
+  height: calc(100vw - 100px);
+  margin: auto;
+  margin-bottom: 16px;
+}
+body #content #attack-screen #enemy-player-info .board .board-position {
+  border: 1px solid #FFFCFF;
+}
+body #content #attack-screen #enemy-player-info .board .board-position.water {
+  background-color: #214251;
+}
+body #content #attack-screen #enemy-player-info .board .board-position.hit {
+  background-color: #DF2935;
+}
+body #content #attack-screen #pop-up-attack-result {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  color: #000;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background-color: #FFFCFF;
+  width: calc(100% - 48px);
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: rgba(0, 0, 0, 0.3607843137) 0 0 12px;
+}
+body #content #attack-screen #pop-up-attack-result.active {
+  display: block;
 }
 
 /*# sourceMappingURL=styles.css.map */
